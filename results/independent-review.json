@@ -1,0 +1,30 @@
+{
+  "reviewer_role": "independent implementation agent",
+  "rounds": 2,
+  "unit_tests_passed": 13,
+  "unresolved_reported_code_findings": 0,
+  "execution_scope": "Offline tests and source/notebook review. Real SDK/GPU execution evidence is reported separately.",
+  "reviewed_source_sha256": {
+    "project_demo/common.py": "d4b186d1c46702ea1e185a6c2593aa030422eced1b0aeb6bc5e45a83c7ad7e36",
+    "project_demo/data.py": "8a62287b00116ec7107a7f280f5d20e943e712e84a785b4a6273da9f7ed58b62",
+    "project_demo/inference.py": "bb8de05ac03f739124349db0563f901ef546d3517aca74e546853cfda7e63f62",
+    "project_demo/nim_client.py": "51d88b706542bb6bd33f08feec9f3003f5a33d8538bd382cba6c367b7b4b7a31",
+    "project_demo/training.py": "bd4fe7355a8b6bd15ed947dc4e65f0608752004f584851d0a4e465912321cc67",
+    "project_demo/__init__.py": "41362a5ea4931c546433d4c48290c5707bf02dbbea1c3aafa9f43d1225e47003",
+    "project_demo/__main__.py": "f6e30b0d375629d7f5ca6f538ae60419eb84ea37ee2220c9c78a1641cc886566",
+    "tests/test_execution.py": "79ac7ff31426ae80544a0f19c0bcdd8e1c2071a3fd2fc2ecd21294642fdf195f",
+    "tests/test_finance.py": "0acd403fdab318f860b0abe7e6dc4a27927a3e0cfd9535e5ca5165f62a796f4a",
+    "tests/test_prompt.py": "a553a361956760674a8d14230ea1a87c5e39ac105deb5643a079b0fae069198f",
+    "project_demo/hf_worker.py": "a62e81b0aaa59d2ed0e3d76672bfc594b0b178a0491041c32e64ca751fb0d226"
+  },
+  "final_delta": {
+    "scope": "checkpoint chat standalone demo; plain AutoModel comparison preserved",
+    "independent_tests_passed": 13,
+    "real_chat_execution_review": "verified separate actual live GPU evidence; identical original-model revision, seed and three test examples; strict scores0/3 independently reproduced",
+    "chat_result_sha256": "d765e0e6e11ede591092d0a6e6212ff7808c46b30dae6f0dcdaef8662b074996",
+    "inference_process_isolation": "source reviewed; 13 tests and compilation passed",
+    "original_70b_automodel": "verified completed job14147:12updates,1120adaptertensors,560nonzeroLoRA-B,reload,samefixedtest,independentlyrecomputedmetrics",
+    "original_70b_evidence": "evidence/automodel-original/independent-verification.json"
+  },
+  "final_disposition": "approved for documented scope; no unresolved reported findings"
+}

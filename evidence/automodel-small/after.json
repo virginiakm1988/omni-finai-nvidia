@@ -1,0 +1,126 @@
+{
+  "predictions": [
+    {
+      "id": "test-000",
+      "task": "extract",
+      "prediction": " ```json\n{\n  \"revenue_million\": 930,\n  \"net_income_million\": 105\n}\n```",
+      "checks": {
+        "revenue_million": 930,
+        "net_income_million": 105
+      }
+    },
+    {
+      "id": "test-001",
+      "task": "qa",
+      "prediction": "9.36%",
+      "checks": {
+        "growth_percent": 21.05
+      }
+    },
+    {
+      "id": "test-002",
+      "task": "summary",
+      "prediction": "2025 revenue was USD 1300 million and net income was USD 35 million. \n\nThis is an example of how to summarize financial data from a fictional test company's performance in one concise statement. The summary includes the total revenue and net income figures provided by the company for the year 2025. It also specifies that these figures represent the same period as the previous year (2024). This format allows for easy comparison between the two years' financial performance. \n\nTo further elaborate on this summary:\n- Revenue increased by $30 million from 2024 to 2025.\n- Net income decreased by $3 million from 2024 to 2025.\n\nThe summary provides a clear overview of",
+      "checks": {
+        "revenue_million": 1300,
+        "net_income_million": 35
+      }
+    },
+    {
+      "id": "test-003",
+      "task": "extract",
+      "prediction": " ```json\n{\n  \"revenue_million\": 1180,\n  \"net_income_million\": 30\n}\n```",
+      "checks": {
+        "revenue_million": 1180,
+        "net_income_million": 30
+      }
+    },
+    {
+      "id": "test-004",
+      "task": "qa",
+      "prediction": "12.96%",
+      "checks": {
+        "growth_percent": 17.7
+      }
+    },
+    {
+      "id": "test-005",
+      "task": "summary",
+      "prediction": "2025 revenue was USD 735 million and net income was USD 80 million. \n\nThis is an example of how to summarize financial data from a fictional test company's report into a single, concise statement. The key points include the year (2025), revenue figure ($735 million), and net income figure ($80 million). This format allows for easy comparison between different years or companies' performance metrics. \n\nTo further elaborate on this summary:\n\n- Revenue increased by $46 million from 2024 to 2025.\n- Net income rose by $19 million from 2024 to 2025.\n\nThese figures provide insight into the company's profitability and financial health over the specified period. They",
+      "checks": {
+        "revenue_million": 735,
+        "net_income_million": 80
+      }
+    },
+    {
+      "id": "test-006",
+      "task": "extract",
+      "prediction": " ```json\n{\n  \"revenue_million\": 985,\n  \"net_income_million\": 25\n}\n```",
+      "checks": {
+        "revenue_million": 985,
+        "net_income_million": 25
+      }
+    },
+    {
+      "id": "test-007",
+      "task": "qa",
+      "prediction": "3.89%",
+      "checks": {
+        "growth_percent": -0.34
+      }
+    },
+    {
+      "id": "test-008",
+      "task": "summary",
+      "prediction": "2025 revenue was USD 705 million and net income was USD 40 million. \n\nThis is an example of how to summarize financial data from a fictional test company's report into a single, concise statement. The key points include the year (2025), revenue figure ($705 million), and net income figure ($40 million). This format allows for easy comparison between different years or companies' performance metrics. \n\nTo further elaborate on this summary:\n\n- **Revenue**: The company reported a revenue of $705 million in 2025.\n- **Net Income**: In 2025, the company generated a net income of $40 million.\n\nThese figures provide a clear overview of the company's financial performance during the specified",
+      "checks": {
+        "revenue_million": 705,
+        "net_income_million": 40
+      }
+    },
+    {
+      "id": "test-009",
+      "task": "extract",
+      "prediction": " ```json\n{\n  \"revenue_million\": 420,\n  \"net_income_million\": 115\n}\n```",
+      "checks": {
+        "revenue_million": 420,
+        "net_income_million": 115
+      }
+    },
+    {
+      "id": "test-010",
+      "task": "qa",
+      "prediction": "36.75%",
+      "checks": {
+        "growth_percent": 7.56
+      }
+    },
+    {
+      "id": "test-011",
+      "task": "summary",
+      "prediction": "2025 revenue was USD 730 million and net income was USD 80 million. \n\nThis is an example of how to summarize financial data from a fictional test company like Fictional Test Company 011:\n\nRevenue: USD 730 million\nNet Income: USD 80 million\n\nThese figures represent the company's performance metrics for the fiscal year ending December 31, 2025. The summary provides a concise overview of the company's revenue and profitability for that specific period. \n\nTo further elaborate on this information:\n- Revenue growth from USD 720 million in 2024 to USD 730 million indicates an increase in sales volume.\n- Net income of USD 80 million suggests the company has generated",
+      "checks": {
+        "revenue_million": 730,
+        "net_income_million": 80
+      }
+    }
+  ],
+  "metrics": {
+    "extract": {
+      "n": 4,
+      "pass_rate": 1.0,
+      "metric": "deterministic_correctness"
+    },
+    "qa": {
+      "n": 4,
+      "pass_rate": 0.0,
+      "metric": "deterministic_correctness"
+    },
+    "summary": {
+      "n": 4,
+      "pass_rate": 1.0,
+      "metric": "numeric_coverage_only"
+    }
+  },
+  "test_sha256": "938afa8d25601c4d0d346468b24e6e11e38e8e7bfef2f50dca5a1912ef78a9a8"
+}

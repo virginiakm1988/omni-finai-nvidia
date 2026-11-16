@@ -1,0 +1,38 @@
+{
+  "command": "train",
+  "mode": "live",
+  "status": "failed",
+  "config": {
+    "project": "omni-finai",
+    "profile": "small",
+    "seed": 42,
+    "max_requests": 10,
+    "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "base_url": "https://integrate.api.nvidia.com/v1",
+    "profiles": {
+      "original": {
+        "model_id": "ichanchiu/Llama-3.1-Omni-FinAI-70B",
+        "revision": "8f9e1ccba75181c7ca95df77e8313a76bfdd4a50",
+        "gated": false,
+        "min_free_disk_gib": 150
+      },
+      "small": {
+        "model_id": "meta-llama/Llama-3.2-1B",
+        "revision": "4e20de362430cd3b72f300e6b0f18e50e7166e08",
+        "gated": true,
+        "min_free_disk_gib": 5
+      }
+    },
+    "max_new_tokens": 160,
+    "train_steps": 12,
+    "train_size": 48,
+    "validation_size": 12,
+    "test_size": 12
+  },
+  "config_sha256": "3274e27dd5df064412593c13cda38af1d59b127809285677ff524728be6b94db",
+  "started_at": "2026-11-16T09:18:36.531820+00:00",
+  "python": "3.12.16",
+  "error": "You are trying to access a gated repo.\nMake sure to have access to it at https://huggingface.co/meta-llama/Llama-3.2-1B.\n401 Client Error. (Request ID: Root=1-6afaca9a-134f5faf500092747022e5ec;d8a95678-1c22-4e04-a766-4a3f85be288f)\n\nCannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/4e20de362430cd3b72f300e6b0f18e50e7166e08/config.json.\nAccess to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+  "error_type": "OSError",
+  "elapsed_seconds": 46.3684
+}

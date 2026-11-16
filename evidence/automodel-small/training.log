@@ -1,0 +1,257 @@
+W1116 17:25:31.899000 4013526 site-packages/torch/utils/_pytree.py:646] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1116 17:25:31.996000 4013526 site-packages/torch/utils/_pytree.py:646] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[validation-workspace]/runtime/automodel-0.7-py312/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-small/20261116T092438-8690bf11/automodel.yaml
+> initializing torch distributed with 1 workers.
+2026-11-16 17:25:43 | INFO | nemo_automodel.components.loggers.log_utils | Setting logging level to 20
+2026-11-16 17:25:45 | INFO | root | Experiment_details:
+2026-11-16 17:25:45 | INFO | root | Timestamp: '2026-11-16T17:25:45'
+2026-11-16 17:25:45 | INFO | root | User: virginiac-nvid-15dda7
+2026-11-16 17:25:45 | INFO | root | Host: cnode1-002
+2026-11-16 17:25:45 | INFO | root | World size: 1
+2026-11-16 17:25:45 | INFO | root | Backend: nccl
+2026-11-16 17:25:45 | INFO | root | Recipe: TrainFinetuneRecipeForNextTokenPrediction
+2026-11-16 17:25:45 | INFO | root | Model name: Qwen/Qwen2.5-0.5B-Instruct
+recipe: TrainFinetuneRecipeForNextTokenPrediction
+seed: 42
+step_scheduler:
+  global_batch_size: 4
+  local_batch_size: 1
+  max_steps: 12
+  num_epochs: 2
+  ckpt_every_steps: 12
+  val_every_steps: 12
+dist_env:
+  backend: nccl
+  timeout_minutes: 10
+distributed:
+  strategy: fsdp2
+  dp_size: null
+  tp_size: 1
+  cp_size: 1
+model:
+  _target_: nemo_automodel.NeMoAutoModelForCausalLM.from_pretrained
+  pretrained_model_name_or_path: Qwen/Qwen2.5-0.5B-Instruct
+  revision: 7ae557604adf67be50417f59c2c2f167def9a775
+  dtype: bfloat16
+  attn_implementation: sdpa
+  trust_remote_code: false
+peft:
+  _target_: nemo_automodel.components._peft.lora.PeftConfig
+  target_modules: '*_proj'
+  dim: 8
+  alpha: 32
+loss_fn:
+  _target_: nemo_automodel.components.loss.masked_ce.MaskedCrossEntropy
+dataset:
+  _target_: nemo_automodel.components.datasets.llm.column_mapped_text_instruction_dataset.ColumnMappedTextInstructionDataset
+  path_or_dataset_id: [validation-workspace]/repos/omni-finai-nvidia/data/generated/train.jsonl
+  column_mapping:
+    context: context
+    question: question
+    answer: answer
+  seq_length: 512
+  answer_only_loss_mask: true
+  padding: do_not_pad
+  truncation: do_not_truncate
+  use_hf_chat_template: false
+validation_dataset:
+  _target_: nemo_automodel.components.datasets.llm.column_mapped_text_instruction_dataset.ColumnMappedTextInstructionDataset
+  path_or_dataset_id: [validation-workspace]/repos/omni-finai-nvidia/data/generated/validation.jsonl
+  column_mapping:
+    context: context
+    question: question
+    answer: answer
+  seq_length: 512
+  answer_only_loss_mask: true
+  padding: do_not_pad
+  truncation: do_not_truncate
+  use_hf_chat_template: false
+dataloader:
+  _target_: torchdata.stateful_dataloader.StatefulDataLoader
+  collate_fn:
+    _target_: nemo_automodel.components.datasets.utils.default_collater
+  shuffle: false
+validation_dataloader:
+  _target_: torchdata.stateful_dataloader.StatefulDataLoader
+  collate_fn:
+    _target_: nemo_automodel.components.datasets.utils.default_collater
+  shuffle: false
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 2.0e-05
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  weight_decay: 0.01
+checkpoint:
+  enabled: true
+  checkpoint_dir: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-small/20261116T092438-8690bf11/checkpoints
+  model_save_format: safetensors
+  save_consolidated: final
+2026-11-16 17:25:45 | INFO | root | Library versions:
+2026-11-16 17:25:45 | INFO | root | - nemo_automodel: 0.7.0 ([validation-workspace]/runtime/automodel-0.7-py312/lib/python3.12/site-packages/nemo_automodel/__init__.py)
+2026-11-16 17:25:45 | INFO | root | - transformers: 5.18.0 ([validation-workspace]/runtime/automodel-0.7-py312/lib/python3.12/site-packages/transformers/__init__.py)
+2026-11-16 17:25:45 | INFO | root | - torch: 2.15.0+cu132 CUDA 13.2
+2026-11-16 17:25:45 | INFO | root | No clip_grad_norm.max_norm specified in config, using default value of 1.0
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+2026-11-16 17:25:46 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B-Instruct/tree/7ae557604adf67be50417f59c2c2f167def9a775?recursive=true&expand=false "HTTP/1.1 200 OK"
+
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]2026-11-16 17:25:46 | INFO | httpx2 | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct/resolve/7ae557604adf67be50417f59c2c2f167def9a775/.gitattributes "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-11-16 17:25:46 | WARNING | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-11-16 17:25:46 | INFO | httpx2 | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct/resolve/7ae557604adf67be50417f59c2c2f167def9a775/LICENSE "HTTP/1.1 307 Temporary Redirect"
+2026-11-16 17:25:46 | INFO | httpx2 | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct/resolve/7ae557604adf67be50417f59c2c2f167def9a775/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-11-16 17:25:47 | INFO | httpx2 | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B-Instruct/7ae557604adf67be50417f59c2c2f167def9a775/.gitattributes?%2FQwen%2FQwen2.5-0.5B-Instruct%2Fresolve%2F7ae557604adf67be50417f59c2c2f167def9a775%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-16 17:25:47 | INFO | httpx2 | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B-Instruct/7ae557604adf67be50417f59c2c2f167def9a775/LICENSE?%2FQwen%2FQwen2.5-0.5B-Instruct%2Fresolve%2F7ae557604adf67be50417f59c2c2f167def9a775%2FLICENSE=&etag=%226634c8cc3133b3848ec74b9f275acaaa1ea618ab%22 "HTTP/1.1 200 OK"
+2026-11-16 17:25:47 | INFO | httpx2 | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B-Instruct/7ae557604adf67be50417f59c2c2f167def9a775/README.md?%2FQwen%2FQwen2.5-0.5B-Instruct%2Fresolve%2F7ae557604adf67be50417f59c2c2f167def9a775%2FREADME.md=&etag=%224b8373851d093eb9f3017443f27781c6971eff24%22 "HTTP/1.1 200 OK"
+2026-11-16 17:25:47 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B-Instruct/7ae557604adf67be50417f59c2c2f167def9a775/LICENSE?%2FQwen%2FQwen2.5-0.5B-Instruct%2Fresolve%2F7ae557604adf67be50417f59c2c2f167def9a775%2FLICENSE=&etag=%226634c8cc3133b3848ec74b9f275acaaa1ea618ab%22 "HTTP/1.1 200 OK"
+2026-11-16 17:25:47 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B-Instruct/7ae557604adf67be50417f59c2c2f167def9a775/.gitattributes?%2FQwen%2FQwen2.5-0.5B-Instruct%2Fresolve%2F7ae557604adf67be50417f59c2c2f167def9a775%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-16 17:25:47 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B-Instruct/7ae557604adf67be50417f59c2c2f167def9a775/README.md?%2FQwen%2FQwen2.5-0.5B-Instruct%2Fresolve%2F7ae557604adf67be50417f59c2c2f167def9a775%2FREADME.md=&etag=%224b8373851d093eb9f3017443f27781c6971eff24%22 "HTTP/1.1 200 OK"
+
+Fetching 10 files:  80%|████████  | 8/10 [00:01<00:00,  7.70it/s]
+Fetching 10 files: 100%|██████████| 10/10 [00:01<00:00,  9.52it/s]
+2026-11-16 17:25:47 | INFO | nemo_automodel._transformers.model_init | Using custom model implementation for Qwen2ForCausalLM
+[validation-workspace]/runtime/automodel-0.7-py312/lib/python3.12/site-packages/nemo_automodel/_transformers/model_init.py:1393: FutureWarning: Qwen2ForCausalLM is deprecated and will be removed in NeMo AutoModel 26.10 container release and NeMo-Automodel v0.7.0. Associated example configs: examples/llm_benchmark/qwen/custom_qwen2_5_32b_peft_benchmark.yaml, examples/llm_benchmark/qwen/custom_qwen2_5_32b_peft_benchmark_2nodes.yaml, examples/llm_benchmark/qwen/qwen2_5_7b_peft_benchmark.yaml, examples/llm_finetune/agent/qwen2_5_3b_function_calling.yaml, examples/llm_finetune/agent/qwen2_5_3b_function_calling_lora.yaml, examples/llm_finetune/qwen/qwen2_5_0p5b_instruct_fineproofs_chat.yaml, examples/llm_finetune/qwen/qwen2_5_32b_peft_benchmark.yaml, examples/llm_finetune/qwen/qwen2_5_7b_hellaswag_fp8.yaml, examples/llm_finetune/qwen/qwen2_5_7b_instruct_chat.yaml, examples/llm_finetune/qwen/qwen2_5_7b_squad.yaml, examples/llm_finetune/qwen/qwen2_5_7b_squad_muon.yaml, examples/llm_finetune/qwen/qwen2_5_7b_squad_peft.yaml, examples/llm_finetune/qwen/qwen25_magi_prefix_tree_rollouts.yaml, examples/llm_finetune/seed/seed_coder_8b_instruct_hellaswag_fp8.yaml, examples/llm_finetune/seed/seed_coder_8b_instruct_squad.yaml, examples/llm_finetune/seed/seed_coder_8b_instruct_squad_peft.yaml, examples/llm_finetune/seed/seed_oss_36B_hellaswag.yaml, examples/llm_finetune/seed/seed_oss_36B_hellaswag_peft.yaml
+  model = model_cls(hf_config, *model_args, **kwargs)
+2026-11-16 17:25:48 | INFO | root | load_model: 0.92 GB loaded in 0.52s (1.76 GB/s overall | destinations 0.02s, storage read 0.48s, adapt 0.00s, install 0.03s)
+2026-11-16 17:25:48 | INFO | root | Model summary:
+2026-11-16 17:25:48 | INFO | root | --------------------------------
+2026-11-16 17:25:48 | INFO | root | Trainable parameters: 4,399,104
+2026-11-16 17:25:48 | INFO | root | Total parameters: 498,431,872
+2026-11-16 17:25:48 | INFO | root | Trainable parameters percentage: 0.88%
+2026-11-16 17:25:48 | INFO | root | Param L2 norm: 829.5348
+2026-11-16 17:25:48 | INFO | root | --------------------------------
+2026-11-16 17:25:48 | INFO | root | Using model config to instantiate tokenizer
+2026-11-16 17:25:48 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B-Instruct "HTTP/1.1 200 OK"
+2026-11-16 17:25:49 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B-Instruct "HTTP/1.1 200 OK"
+2026-11-16 17:25:49 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B-Instruct/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-11-16 17:25:49 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B-Instruct/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-11-16 17:25:50 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B-Instruct "HTTP/1.1 200 OK"
+2026-11-16 17:25:51 | INFO | httpx2 | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/json/json.py "HTTP/1.1 200 OK"
+[Qwen2ForCausalLM] Attention implementation: sdpa
+[Qwen2ForCausalLM] torch_dtype: torch.bfloat16
+
+Generating train split: 0 examples [00:00, ? examples/s]
+Generating train split: 48 examples [00:00, 1480.14 examples/s]
+[validation-workspace]/runtime/automodel-0.7-py312/lib/python3.12/site-packages/torchdata/stateful_dataloader/stateful_dataloader.py:379: UserWarning: 'set_vital' is deprecated, please do not call
+  torch.set_vital("Dataloader", "enabled", "True")  # type: ignore[attr-defined]
+2026-11-16 17:25:51 | INFO | httpx2 | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/json/json.py "HTTP/1.1 200 OK"
+
+Generating train split: 0 examples [00:00, ? examples/s]
+Generating train split: 12 examples [00:00, 1496.05 examples/s]
+2026-11-16 17:25:51 | INFO | root | Signal handler installed for SIGTERM
+2026-11-16 17:25:51 | INFO | root | Model Part 0:
+2026-11-16 17:25:51 | INFO | root | Qwen2ForCausalLM(
+2026-11-16 17:25:51 | INFO | root |   (model): Qwen2Model(
+2026-11-16 17:25:51 | INFO | root |     (embed_tokens): Embedding(151936, 896)
+2026-11-16 17:25:51 | INFO | root |     (layers): ModuleList(
+2026-11-16 17:25:51 | INFO | root |       (0-23): 24 x Qwen2DecoderLayer(
+2026-11-16 17:25:51 | INFO | root |         (self_attn): Qwen2Attention(
+2026-11-16 17:25:51 | INFO | root |           (q_proj): PatchedLinearLoRA(
+2026-11-16 17:25:51 | INFO | root |             in_features=896, out_features=896, bias=True
+2026-11-16 17:25:51 | INFO | root |             (lora_A): Linear(in_features=896, out_features=8, bias=False)
+2026-11-16 17:25:51 | INFO | root |             (lora_B): Linear(in_features=8, out_features=896, bias=False)
+2026-11-16 17:25:51 | INFO | root |           )
+2026-11-16 17:25:51 | INFO | root |           (k_proj): PatchedLinearLoRA(
+2026-11-16 17:25:51 | INFO | root |             in_features=896, out_features=128, bias=True
+2026-11-16 17:25:51 | INFO | root |             (lora_A): Linear(in_features=896, out_features=8, bias=False)
+2026-11-16 17:25:51 | INFO | root |             (lora_B): Linear(in_features=8, out_features=128, bias=False)
+2026-11-16 17:25:51 | INFO | root |           )
+2026-11-16 17:25:51 | INFO | root |           (v_proj): PatchedLinearLoRA(
+2026-11-16 17:25:51 | INFO | root |             in_features=896, out_features=128, bias=True
+2026-11-16 17:25:51 | INFO | root |             (lora_A): Linear(in_features=896, out_features=8, bias=False)
+2026-11-16 17:25:51 | INFO | root |             (lora_B): Linear(in_features=8, out_features=128, bias=False)
+2026-11-16 17:25:51 | INFO | root |           )
+2026-11-16 17:25:51 | INFO | root |           (o_proj): PatchedLinearLoRA(
+2026-11-16 17:25:51 | INFO | root |             in_features=896, out_features=896, bias=False
+2026-11-16 17:25:51 | INFO | root |             (lora_A): Linear(in_features=896, out_features=8, bias=False)
+2026-11-16 17:25:51 | INFO | root |             (lora_B): Linear(in_features=8, out_features=896, bias=False)
+2026-11-16 17:25:51 | INFO | root |           )
+2026-11-16 17:25:51 | INFO | root |         )
+2026-11-16 17:25:51 | INFO | root |         (mlp): Qwen2SeparateMLP(
+2026-11-16 17:25:51 | INFO | root |           (gate_proj): PatchedLinearLoRA(
+2026-11-16 17:25:51 | INFO | root |             in_features=896, out_features=4864, bias=False
+2026-11-16 17:25:51 | INFO | root |             (lora_A): Linear(in_features=896, out_features=8, bias=False)
+2026-11-16 17:25:51 | INFO | root |             (lora_B): Linear(in_features=8, out_features=4864, bias=False)
+2026-11-16 17:25:51 | INFO | root |           )
+2026-11-16 17:25:51 | INFO | root |           (up_proj): PatchedLinearLoRA(
+2026-11-16 17:25:51 | INFO | root |             in_features=896, out_features=4864, bias=False
+2026-11-16 17:25:51 | INFO | root |             (lora_A): Linear(in_features=896, out_features=8, bias=False)
+2026-11-16 17:25:51 | INFO | root |             (lora_B): Linear(in_features=8, out_features=4864, bias=False)
+2026-11-16 17:25:51 | INFO | root |           )
+2026-11-16 17:25:51 | INFO | root |           (down_proj): PatchedLinearLoRA(
+2026-11-16 17:25:51 | INFO | root |             in_features=4864, out_features=896, bias=False
+2026-11-16 17:25:51 | INFO | root | ...
+2026-11-16 17:25:51 | INFO | root | Optimizer:
+2026-11-16 17:25:51 | INFO | root | AdamW (
+2026-11-16 17:25:51 | INFO | root | Parameter Group 0
+2026-11-16 17:25:51 | INFO | root |     amsgrad: False
+2026-11-16 17:25:51 | INFO | root |     betas: (0.9, 0.999)
+2026-11-16 17:25:51 | INFO | root |     capturable: False
+2026-11-16 17:25:51 | INFO | root |     decoupled_weight_decay: True
+2026-11-16 17:25:51 | INFO | root |     differentiable: False
+2026-11-16 17:25:51 | INFO | root |     eps: 1e-08
+2026-11-16 17:25:51 | INFO | root |     foreach: None
+2026-11-16 17:25:51 | INFO | root |     fused: None
+2026-11-16 17:25:51 | INFO | root |     lr: 2e-05
+2026-11-16 17:25:51 | INFO | root |     maximize: False
+2026-11-16 17:25:51 | INFO | root |     weight_decay: 0.01
+2026-11-16 17:25:51 | INFO | root | )
+2026-11-16 17:25:51 | INFO | root | LR scheduler: <unavailable>
+2026-11-16 17:25:51 | INFO | root | Step scheduler:
+2026-11-16 17:25:51 | INFO | root | - Gradient accumulation steps: 4
+2026-11-16 17:25:51 | INFO | root | - Checkpoint every steps: 12
+2026-11-16 17:25:51 | INFO | root | - Garbage collect every steps: None
+2026-11-16 17:25:51 | INFO | root | - Current Epoch: 0
+2026-11-16 17:25:51 | INFO | root | - Number of epochs: 2
+2026-11-16 17:25:51 | INFO | root | - Validation every steps: 12
+2026-11-16 17:25:51 | INFO | root | - Max train steps: 12
+2026-11-16 17:25:51 | INFO | root | - Checkpoint retention: disabled; keeping all checkpoints (checkpoint.max_recent_checkpoints=None)
+
+Training:   0%|          | 0/12 [00:00<?, ?step/s][transformers] `use_return_dict` is deprecated! Use `return_dict` instead!
+[validation-workspace]/runtime/automodel-0.7-py312/lib/python3.12/site-packages/triton/knobs.py:504: UserWarning: TRITON_DEFAULT_FP_FUSION is unset: defaulting to FP fusion ENABLED for backward compatibility in Triton 3.9. The default will change to DISABLED in Triton 3.10; set TRITON_DEFAULT_FP_FUSION=1 to keep fusion enabled or =0 to adopt the new default early and silence this warning.
+  warn_once(FP_FUSION_DEFAULT_WARNING)
+2026-11-16 17:26:21 | INFO | root | step 0 | epoch 0 | loss 0.2533 | grad_norm 15.5193 | lr 2.00e-05 | mem 1.28 GiB | tps 14.86(14.86/gpu) | num_label_tokens 70
+
+Training:   0%|          | 0/12 [00:29<?, ?step/s, loss=0.2533, lr=2.00e-05, tps=15]
+Training:   8%|▊         | 1/12 [00:29<05:22, 29.35s/step, loss=0.2533, lr=2.00e-05, tps=15]2026-11-16 17:26:21 | INFO | root | step 1 | epoch 0 | loss 0.4571 | grad_norm 11.5767 | lr 2.00e-05 | mem 1.29 GiB | tps 645.39(645.39/gpu) | num_label_tokens 52
+
+Training:   8%|▊         | 1/12 [00:29<05:22, 29.35s/step, loss=0.4571, lr=2.00e-05, tps=645]
+Training:  17%|█▋        | 2/12 [00:29<02:04, 12.46s/step, loss=0.4571, lr=2.00e-05, tps=645]2026-11-16 17:26:22 | INFO | root | step 2 | epoch 0 | loss 0.1905 | grad_norm 6.7086 | lr 2.00e-05 | mem 1.29 GiB | tps 711.29(711.29/gpu) | num_label_tokens 72
+
+Training:  17%|█▋        | 2/12 [00:30<02:04, 12.46s/step, loss=0.1905, lr=2.00e-05, tps=711]
+Training:  25%|██▌       | 3/12 [00:30<01:03,  7.05s/step, loss=0.1905, lr=2.00e-05, tps=711]2026-11-16 17:26:22 | INFO | root | step 3 | epoch 0 | loss 0.1125 | grad_norm 4.4040 | lr 2.00e-05 | mem 1.30 GiB | tps 1244.81(1244.81/gpu) | num_label_tokens 71
+
+Training:  25%|██▌       | 3/12 [00:30<01:03,  7.05s/step, loss=0.1125, lr=2.00e-05, tps=1245]
+Training:  33%|███▎      | 4/12 [00:30<00:35,  4.40s/step, loss=0.1125, lr=2.00e-05, tps=1245]2026-11-16 17:26:23 | INFO | root | step 4 | epoch 0 | loss 0.3153 | grad_norm 8.6916 | lr 2.00e-05 | mem 1.29 GiB | tps 954.49(954.49/gpu) | num_label_tokens 54
+
+Training:  33%|███▎      | 4/12 [00:31<00:35,  4.40s/step, loss=0.3153, lr=2.00e-05, tps=954] 
+Training:  42%|████▏     | 5/12 [00:31<00:20,  2.97s/step, loss=0.3153, lr=2.00e-05, tps=954]2026-11-16 17:26:23 | INFO | root | step 5 | epoch 0 | loss 0.1244 | grad_norm 2.7315 | lr 2.00e-05 | mem 1.29 GiB | tps 1000.39(1000.39/gpu) | num_label_tokens 71
+
+Training:  42%|████▏     | 5/12 [00:31<00:20,  2.97s/step, loss=0.1244, lr=2.00e-05, tps=1000]
+Training:  50%|█████     | 6/12 [00:31<00:12,  2.11s/step, loss=0.1244, lr=2.00e-05, tps=1000]2026-11-16 17:26:24 | INFO | root | step 6 | epoch 0 | loss 0.1091 | grad_norm 2.9394 | lr 2.00e-05 | mem 1.28 GiB | tps 1213.26(1213.26/gpu) | num_label_tokens 68
+
+Training:  50%|█████     | 6/12 [00:32<00:12,  2.11s/step, loss=0.1091, lr=2.00e-05, tps=1213]
+Training:  58%|█████▊    | 7/12 [00:32<00:07,  1.54s/step, loss=0.1091, lr=2.00e-05, tps=1213]2026-11-16 17:26:24 | INFO | root | step 7 | epoch 0 | loss 0.2943 | grad_norm 6.5821 | lr 2.00e-05 | mem 1.29 GiB | tps 776.76(776.76/gpu) | num_label_tokens 54
+
+Training:  58%|█████▊    | 7/12 [00:32<00:07,  1.54s/step, loss=0.2943, lr=2.00e-05, tps=777] 
+Training:  67%|██████▋   | 8/12 [00:32<00:04,  1.22s/step, loss=0.2943, lr=2.00e-05, tps=777]2026-11-16 17:26:25 | INFO | root | step 8 | epoch 0 | loss 0.0905 | grad_norm 3.5132 | lr 2.00e-05 | mem 1.30 GiB | tps 1256.05(1256.05/gpu) | num_label_tokens 73
+
+Training:  67%|██████▋   | 8/12 [00:33<00:04,  1.22s/step, loss=0.0905, lr=2.00e-05, tps=1256]
+Training:  75%|███████▌  | 9/12 [00:33<00:02,  1.06step/s, loss=0.0905, lr=2.00e-05, tps=1256]2026-11-16 17:26:25 | INFO | root | step 9 | epoch 0 | loss 0.0944 | grad_norm 6.9966 | lr 2.00e-05 | mem 1.29 GiB | tps 1244.15(1244.15/gpu) | num_label_tokens 69
+
+Training:  75%|███████▌  | 9/12 [00:33<00:02,  1.06step/s, loss=0.0944, lr=2.00e-05, tps=1244]
+Training:  83%|████████▎ | 10/12 [00:33<00:01,  1.31step/s, loss=0.0944, lr=2.00e-05, tps=1244]2026-11-16 17:26:25 | INFO | root | step 10 | epoch 0 | loss 0.3808 | grad_norm 7.4100 | lr 2.00e-05 | mem 1.29 GiB | tps 1175.28(1175.28/gpu) | num_label_tokens 53
+
+Training:  83%|████████▎ | 10/12 [00:33<00:01,  1.31step/s, loss=0.3808, lr=2.00e-05, tps=1175]
+Training:  92%|█████████▏| 11/12 [00:33<00:00,  1.57step/s, loss=0.3808, lr=2.00e-05, tps=1175]2026-11-16 17:26:26 | INFO | root | step 11 | epoch 0 | loss 0.1775 | grad_norm 11.3593 | lr 2.00e-05 | mem 1.29 GiB | tps 1244.62(1244.62/gpu) | num_label_tokens 71
+
+Training:  92%|█████████▏| 11/12 [00:34<00:00,  1.57step/s, loss=0.1775, lr=2.00e-05, tps=1245]
+Training: 100%|██████████| 12/12 [00:34<00:00,  1.82step/s, loss=0.1775, lr=2.00e-05, tps=1245]2026-11-16 17:26:27 | INFO | root | [val] name "default" | step 11 | epoch 0 | loss 0.1933 | lr 2.00e-05 | num_label_tokens 194
+2026-11-16 17:26:27 | INFO | nemo_automodel.recipes.base_recipe | Saving checkpoint to [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-small/20261116T092438-8690bf11/checkpoints/epoch_0_step_11
+2026-11-16 17:26:27 | INFO | nemo_automodel.components.checkpoint.lifecycle | Updated LOWEST_VAL checkpoint symlink to epoch_0_step_11 (val_loss=0.1933)
+
+Training: 100%|██████████| 12/12 [00:35<00:00,  3.00s/step, loss=0.1775, lr=2.00e-05, tps=1245]

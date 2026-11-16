@@ -1,0 +1,126 @@
+{
+  "predictions": [
+    {
+      "id": "test-000",
+      "task": "extract",
+      "prediction": "2025 net income was USD 105 million. \n2025 net income was USD 105 million. \n2025 revenue was USD 930 million. \n2025 revenue_million: 930 \n2025 net_income_million: 105 \n2024 revenue_million: 970 \n2024 net_income_million: 100 \n2023 revenue_million: 1000 \n2022 revenue_million: 1000 \n2021 revenue_million: 1000 \n2020 revenue_million: 1000 \n2020 net_income_million: 100 \n2019 revenue_million: 1000 \n2018 revenue_million: 1000 \n2017 revenue_million: 1000 \n2016 revenue_million: 1000 \n",
+      "checks": {
+        "revenue_million": 930,
+        "net_income_million": 105
+      }
+    },
+    {
+      "id": "test-001",
+      "task": "qa",
+      "prediction": "20.63% 20.63%  What was the year-over-year net income growth in percent? 8.47%  What was the year-over-year net income growth in percent? 8.47%  What was the year-over-year revenue growth in percent? 21.13%  What was the year-over-year net income growth in percent? 8.47%  What was the year-over-year revenue growth in percent? 21.13%  What was the year-over-year net income growth in percent? 8.47%  What was the year-over-year revenue growth in percent? 21.13%  What was the year-over-year net income growth in percent? 8.47%  What was the year-over-year revenue growth in",
+      "checks": {
+        "growth_percent": 21.05
+      }
+    },
+    {
+      "id": "test-002",
+      "task": "summary",
+      "prediction": "2025 revenue was USD 1300 million and net income was USD 35 million. 2025 revenue was USD 1300 million and net income was USD 35 million. \n 2025 revenue was USD 1300 million and net income was USD 35 million. \n 2025 revenue was USD 1300 million and net income was USD 35 million. \n 2025 revenue was USD 1300 million and net income was USD 35 million. \n 2025 revenue was USD 1300 million and net income was USD 35 million. \n 2025 revenue was USD 1300 million and net income was USD 35 million. \n 2025 revenue was USD 1300 million and net income was USD 35 million. \n 202",
+      "checks": {
+        "revenue_million": 1300,
+        "net_income_million": 35
+      }
+    },
+    {
+      "id": "test-003",
+      "task": "extract",
+      "prediction": "2025 net income was USD 30 million. \n2025 net income was USD 30 million. \n2024 net income was USD 30 million. \n2024 revenue_million was USD 1140 million. \n2025 revenue_million was USD 1180 million. \n2025 net_income_million was USD 30 million. \n2024 net_income_million was USD 30 million. \n2025 revenue was USD 1180 million. \n2024 net_income was USD 30 million. \n2025 revenue_million was USD 1180 million. \n2024 net_income was USD 30 million. \n2025 revenue was USD 1180 million. \n2024 net_income was USD 30 million. \n2025 net_income was USD ",
+      "checks": {
+        "revenue_million": 1180,
+        "net_income_million": 30
+      }
+    },
+    {
+      "id": "test-004",
+      "task": "qa",
+      "prediction": "17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% 17.5% ",
+      "checks": {
+        "growth_percent": 17.7
+      }
+    },
+    {
+      "id": "test-005",
+      "task": "summary",
+      "prediction": "2025 revenue was USD 735 million and net income was USD 80 million. \n 2. \n 3. \n 4. \n 5. \n 6. \n 7. \n 8. \n 9. \n 10. \n 11. \n 12. \n 13. \n 14. \n 15. \n 16. \n 17. \n 18. \n 19. \n 20. \n 21. \n 22. \n 23. \n 24. \n 25. \n 26. \n 27. \n 28. \n 29. \n 30. \n 31. \n 32. \n 33. \n 34. \n 35. \n 36. \n 37",
+      "checks": {
+        "revenue_million": 735,
+        "net_income_million": 80
+      }
+    },
+    {
+      "id": "test-006",
+      "task": "extract",
+      "prediction": "2025: { \"revenue_million\": 985, \"net_income_million\": 25 } \n\n2024: { \"revenue_million\": 850, \"net_income_million\": 20 } \n\n2025: { \"revenue_million\": 985, \"net_income_million\": 25 } \n\n2026: { \"revenue_million\": 1025, \"net_income_million\": 30 } \n\n2027: { \"revenue_million\": 1065, \"net_income_million\": 35 } \n\n2028: { \"revenue_million\": 1105, \"net_income_million\": 40 } \n\n2029: { \"revenue_million\": 1155, \"net_income_million",
+      "checks": {
+        "revenue_million": 985,
+        "net_income_million": 25
+      }
+    },
+    {
+      "id": "test-007",
+      "task": "qa",
+      "prediction": "0.33% \nAnswer: 0.33% \nWhat was the year-over-year revenue growth in percent? \nAnswer: 0.33% \nWhat was the year-over-year revenue growth in percent? \nAnswer: 0.33% \nWhat was the year-over-year revenue growth in percent? \nAnswer: 0.33% \nWhat was the year-over-year revenue growth in percent? \nAnswer: 0.33% \nWhat was the year-over-year revenue growth in percent? \nAnswer: 0.33% \nWhat was the year-over-year revenue growth in percent? \nAnswer: 0.33% \nWhat was the year-over-year revenue growth in percent? \nAnswer: 0.33% \nWhat was the year-over-year revenue",
+      "checks": {
+        "growth_percent": -0.34
+      }
+    },
+    {
+      "id": "test-008",
+      "task": "summary",
+      "prediction": "2025 revenue was USD 705 million and net income was USD 40 million. \n 2. \n 3. \n 4. \n 5. \n 6. \n 7. \n 8. \n 9. \n 10. \n 11. \n 12. \n 13. \n 14. \n 15. \n 16. \n 17. \n 18. \n 19. \n 20. \n 21. \n 22. \n 23. \n 24. \n 25. \n 26. \n 27. \n 28. \n 29. \n 30. \n 31. \n 32. \n 33. \n 34. \n 35. \n 36. \n 37",
+      "checks": {
+        "revenue_million": 705,
+        "net_income_million": 40
+      }
+    },
+    {
+      "id": "test-009",
+      "task": "extract",
+      "prediction": "2025 net income was USD 115 million. \n2025 net income was USD 115 million. \n2025 revenue was USD 420 million. \n2025 revenue was USD 420 million. \n2025 revenue_million was USD 420 million. \n2025 net_income_million was USD 115 million. \n2025 revenue_million was USD 420 million. \n2025 net_income_million was USD 115 million. \n2025 revenue was USD 420 million. \n2025 net_income was USD 115 million. \n2025 revenue_million was USD 420 million. \n2025 net_income was USD 115 million. \n2025 revenue_million was USD 420 million. \n2025 net_income_million was USD 115 million.",
+      "checks": {
+        "revenue_million": 420,
+        "net_income_million": 115
+      }
+    },
+    {
+      "id": "test-010",
+      "task": "qa",
+      "prediction": "7.5% \nAnswer: 7.5% \nWhat was the year-over-year revenue growth in percent? 7.5% \nWhat was the year-over-year revenue growth in percent? 7.5% \nWhat was the year-over-year revenue growth in percent? 7.5% \nWhat was the year-over-year revenue growth in percent? 7.5% \nWhat was the year-over-year revenue growth in percent? 7.5% \nWhat was the year-over-year revenue growth in percent? 7.5% \nWhat was the year-over-year revenue growth in percent? 7.5% \nWhat was the year-over-year revenue growth in percent? 7.5% \nWhat was the year-over-year revenue growth in percent?",
+      "checks": {
+        "growth_percent": 7.56
+      }
+    },
+    {
+      "id": "test-011",
+      "task": "summary",
+      "prediction": "2025 revenue was USD 730 million and net income was USD 80 million. \n 2. \n 3. \n 3. \n 4. \n 5. \n 6. \n 7. \n 8. \n 9. \n 10. \n 11. \n 12. \n 13. \n 14. \n 15. \n 16. \n 17. \n 18. \n 19. \n 20. \n 21. \n 22. \n 23. \n 24. \n 25. \n 26. \n 27. \n 28. \n 29. \n 30. \n 31. \n 32. \n 33. \n 34. \n 35. \n 36",
+      "checks": {
+        "revenue_million": 730,
+        "net_income_million": 80
+      }
+    }
+  ],
+  "metrics": {
+    "extract": {
+      "n": 4,
+      "pass_rate": 0.0,
+      "metric": "deterministic_correctness"
+    },
+    "qa": {
+      "n": 4,
+      "pass_rate": 0.0,
+      "metric": "deterministic_correctness"
+    },
+    "summary": {
+      "n": 4,
+      "pass_rate": 1.0,
+      "metric": "numeric_coverage_only"
+    }
+  },
+  "test_sha256": "938afa8d25601c4d0d346468b24e6e11e38e8e7bfef2f50dca5a1912ef78a9a8"
+}

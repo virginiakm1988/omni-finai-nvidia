@@ -1,0 +1,126 @@
+{
+  "predictions": [
+    {
+      "id": "test-000",
+      "task": "extract",
+      "prediction": "2025 is the last year of the 5-year period. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company",
+      "checks": {
+        "revenue_million": 930,
+        "net_income_million": 105
+      }
+    },
+    {
+      "id": "test-001",
+      "task": "qa",
+      "prediction": "10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90%, 100% or 200%? \n[Voting]\"\n\nAnswer: \"Yes. So I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the",
+      "checks": {
+        "growth_percent": 21.05
+      }
+    },
+    {
+      "id": "test-002",
+      "task": "summary",
+      "prediction": "2025 revenue was $1.3 billion, compared with $1.33 billion in 2024. \nThe company reported revenue of $1.3 billion in 2025, compared with $1.33 billion in 2024. \nThe company reported net income of $35 million in 2025, compared with $33 million in 2024. \nThe company reported revenue of $1.3 billion in 2025, compared with $1.33 billion in 2024. Net income was $35 million in 2025, compared with $33 million in 2024. \nThe company reported revenue of $1.3 billion in 2025, compared with $1.33 billion in 2024. Net income was $35 million in ",
+      "checks": {
+        "revenue_million": 1300,
+        "net_income_million": 35
+      }
+    },
+    {
+      "id": "test-003",
+      "task": "extract",
+      "prediction": "2025 is the last year of the 5-year period. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company",
+      "checks": {
+        "revenue_million": 1180,
+        "net_income_million": 30
+      }
+    },
+    {
+      "id": "test-004",
+      "task": "qa",
+      "prediction": "10%, 20%, 30%, 40% or 50%? \n[Voting]\"\n\nAnswer: \"Yes. So I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I",
+      "checks": {
+        "growth_percent": 17.7
+      }
+    },
+    {
+      "id": "test-005",
+      "task": "summary",
+      "prediction": "2025 revenue was 735 million, compared with 580 million in 2024. \n 2. \n 3. \n 4. \n 5. \n 6. \n 7. \n 8. \n 9. \n 10. \n 11. \n 12. \n 13. \n 14. \n 15. \n 16. \n 17. \n 18. \n 19. \n 20. \n 21. \n 22. \n 23. \n 24. \n 25. \n 26. \n 27. \n 28. \n 29. \n 30. \n 31. \n 32. \n 33. \n 34. \n 35. \n 36. \n ",
+      "checks": {
+        "revenue_million": 735,
+        "net_income_million": 80
+      }
+    },
+    {
+      "id": "test-006",
+      "task": "extract",
+      "prediction": "2025 is the last year of the 5-year period. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company",
+      "checks": {
+        "revenue_million": 985,
+        "net_income_million": 25
+      }
+    },
+    {
+      "id": "test-007",
+      "task": "qa",
+      "prediction": "0.0%, 0.1%, 0.2%, 0.3%, 0.4%, 0.5%, 0.6%, 0.7%, 0.8%, 0.9%, 1.0%, 1.1%, 1.2%, 1.3%, 1.4%, 1.5%, 1.6%, 1.7%, 1.8%, 1.9%, 2.1%, 2.3%, 2.5%, 2.7%, 3.0%, 3.2%, 3.4%, 3.6%, 3.8%, 4.0%, 4.2%, 4.4%, ",
+      "checks": {
+        "growth_percent": -0.34
+      }
+    },
+    {
+      "id": "test-008",
+      "task": "summary",
+      "prediction": "2025 revenue was $705 million, compared with $600 million in 2024. \n 3. The company reported revenue of $705 million for 2025, compared with $600 million in 2024. \n 4. The company reported revenue of $705 million for 2025, compared with $600 million in 2024. \n 5. The company reported revenue of $705 million for 2025, compared with $600 million in 2024. \n 6. The company reported revenue of $705 million for 2025, compared with $600 million in 2024. \n 7. The company reported revenue of $705 million for 2025, compared with $600 million in 2024. \n 8. The company reported",
+      "checks": {
+        "revenue_million": 705,
+        "net_income_million": 40
+      }
+    },
+    {
+      "id": "test-009",
+      "task": "extract",
+      "prediction": "2025 is the last year of the 5-year period. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company is a fictional company. \nThe company",
+      "checks": {
+        "revenue_million": 420,
+        "net_income_million": 115
+      }
+    },
+    {
+      "id": "test-010",
+      "task": "qa",
+      "prediction": "10%, 20%, 30%, 40%, 50% or more than 50%? \n[Voting]\"\n\nAnswer: \"Yes. So I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the -- I think the --",
+      "checks": {
+        "growth_percent": 7.56
+      }
+    },
+    {
+      "id": "test-011",
+      "task": "summary",
+      "prediction": "2025 revenue was $730 million, compared with $720 million in 2024. \n 3. The company reported revenue of $730 million for 2025, compared with $720 million in 2024. \n 4. The company reported revenue of $730 million for 2025, compared with $720 million in 2024. \n 5. The company reported revenue of $730 million for 2025, compared with $720 million in 2024. \n 6. The company reported revenue of $730 million for 2025, compared with $720 million in 2024. \n 7. The company reported revenue of $730 million for 2025, compared with $720 million in 2024. \n 8. The company reported",
+      "checks": {
+        "revenue_million": 730,
+        "net_income_million": 80
+      }
+    }
+  ],
+  "metrics": {
+    "extract": {
+      "n": 4,
+      "pass_rate": 0.0,
+      "metric": "deterministic_correctness"
+    },
+    "qa": {
+      "n": 4,
+      "pass_rate": 0.0,
+      "metric": "deterministic_correctness"
+    },
+    "summary": {
+      "n": 4,
+      "pass_rate": 0.0,
+      "metric": "numeric_coverage_only"
+    }
+  },
+  "test_sha256": "938afa8d25601c4d0d346468b24e6e11e38e8e7bfef2f50dca5a1912ef78a9a8"
+}

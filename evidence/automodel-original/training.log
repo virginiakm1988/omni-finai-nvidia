@@ -1,0 +1,277 @@
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+W1116 17:49:53.251000 4042035 torch/distributed/run.py:852] 
+W1116 17:49:53.251000 4042035 torch/distributed/run.py:852] *****************************************
+W1116 17:49:53.251000 4042035 torch/distributed/run.py:852] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1116 17:49:53.251000 4042035 torch/distributed/run.py:852] *****************************************
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T094617-5116b663/automodel.yaml
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T094617-5116b663/automodel.yaml
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T094617-5116b663/automodel.yaml
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T094617-5116b663/automodel.yaml
+> initializing torch distributed with 4 workers.
+2026-11-16 17:50:11 | INFO | nemo_automodel.components.loggers.log_utils | Setting logging level to 20
+2026-11-16 17:50:11 | INFO | root | Experiment_details:
+2026-11-16 17:50:11 | INFO | root | Timestamp: '2026-11-16T17:50:11'
+2026-11-16 17:50:11 | INFO | root | User: virginiac-nvid-15dda7
+2026-11-16 17:50:11 | INFO | root | Host: cnode1-002
+2026-11-16 17:50:11 | INFO | root | World size: 4
+2026-11-16 17:50:11 | INFO | root | Backend: nccl
+2026-11-16 17:50:11 | INFO | root | Recipe: TrainFinetuneRecipeForNextTokenPrediction
+2026-11-16 17:50:11 | INFO | root | Model name: ichanchiu/Llama-3.1-Omni-FinAI-70B
+recipe: TrainFinetuneRecipeForNextTokenPrediction
+seed: 42
+step_scheduler:
+  global_batch_size: 4
+  local_batch_size: 1
+  max_steps: 12
+  num_epochs: 2
+  ckpt_every_steps: 12
+  val_every_steps: 12
+dist_env:
+  backend: nccl
+  timeout_minutes: 10
+distributed:
+  strategy: fsdp2
+  dp_size: null
+  tp_size: 1
+  cp_size: 1
+model:
+  _target_: nemo_automodel.NeMoAutoModelForCausalLM.from_pretrained
+  pretrained_model_name_or_path: ichanchiu/Llama-3.1-Omni-FinAI-70B
+  revision: 8f9e1ccba75181c7ca95df77e8313a76bfdd4a50
+  dtype: bfloat16
+  attn_implementation: sdpa
+  trust_remote_code: false
+peft:
+  _target_: nemo_automodel.components._peft.lora.PeftConfig
+  target_modules: '*_proj'
+  dim: 8
+  alpha: 32
+  use_triton: false
+loss_fn:
+  _target_: nemo_automodel.components.loss.masked_ce.MaskedCrossEntropy
+dataset:
+  _target_: nemo_automodel.components.datasets.llm.column_mapped_text_instruction_dataset.ColumnMappedTextInstructionDataset
+  path_or_dataset_id: [validation-workspace]/repos/omni-finai-nvidia/data/generated/train.jsonl
+  column_mapping:
+    context: context
+    question: question
+    answer: answer
+  seq_length: 512
+  answer_only_loss_mask: true
+  padding: do_not_pad
+  truncation: do_not_truncate
+  use_hf_chat_template: false
+validation_dataset:
+  _target_: nemo_automodel.components.datasets.llm.column_mapped_text_instruction_dataset.ColumnMappedTextInstructionDataset
+  path_or_dataset_id: [validation-workspace]/repos/omni-finai-nvidia/data/generated/validation.jsonl
+  column_mapping:
+    context: context
+    question: question
+    answer: answer
+  seq_length: 512
+  answer_only_loss_mask: true
+  padding: do_not_pad
+  truncation: do_not_truncate
+  use_hf_chat_template: false
+dataloader:
+  _target_: torchdata.stateful_dataloader.StatefulDataLoader
+  collate_fn:
+    _target_: nemo_automodel.components.datasets.utils.default_collater
+  shuffle: false
+validation_dataloader:
+  _target_: torchdata.stateful_dataloader.StatefulDataLoader
+  collate_fn:
+    _target_: nemo_automodel.components.datasets.utils.default_collater
+  shuffle: false
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 2.0e-05
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  weight_decay: 0.01
+checkpoint:
+  enabled: true
+  checkpoint_dir: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T094617-5116b663/checkpoints
+  model_save_format: safetensors
+  save_consolidated: final
+2026-11-16 17:50:11 | INFO | root | Library versions:
+2026-11-16 17:50:11 | INFO | root | - nemo_automodel: 0.7.0 ([validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/__init__.py)
+2026-11-16 17:50:11 | INFO | root | - transformers: 5.18.0 ([validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/__init__.py)
+2026-11-16 17:50:11 | INFO | root | - torch: 2.10.0+cu128 CUDA 12.8
+2026-11-16 17:50:11 | INFO | root | No clip_grad_norm.max_norm specified in config, using default value of 1.0
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+
+Fetching 38 files:   0%|          | 0/38 [00:00<?, ?it/s]
+Fetching 38 files: 100%|██████████| 38/38 [00:00<00:00, 2170.88it/s]
+[Gloo] Rank 0 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 1 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 2 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 3 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+2026-11-16 17:50:12 | INFO | nemo_automodel._transformers.model_init | Using custom model implementation for LlamaForCausalLM
+
+Fetching 38 files:   0%|          | 0/38 [00:00<?, ?it/s]
+Fetching 38 files:   0%|          | 0/38 [00:00<?, ?it/s]
+Fetching 38 files:   0%|          | 0/38 [00:00<?, ?it/s][LlamaForCausalLM] Attention implementation: sdpa
+[LlamaForCausalLM] torch_dtype: torch.bfloat16
+
+Fetching 38 files: 100%|██████████| 38/38 [00:00<00:00, 1685.53it/s]
+
+Fetching 38 files: 100%|██████████| 38/38 [00:00<00:00, 1739.33it/s]
+
+Fetching 38 files: 100%|██████████| 38/38 [00:00<00:00, 1598.86it/s]
+2026-11-16 17:50:12 | INFO | nemo_automodel.components.distributed.parallelizer | Structurally discovered layer groups for LlamaForCausalLM: ('language',)
+2026-11-16 17:50:32 | INFO | root | load_model: 131.42 GB loaded in 19.01s (6.91 GB/s overall | destinations 0.06s, storage read 18.83s, adapt 0.00s, install 0.11s)
+2026-11-16 17:50:34 | INFO | root | Model summary:
+2026-11-16 17:50:34 | INFO | root | --------------------------------
+2026-11-16 17:50:34 | INFO | root | Trainable parameters: 103,546,880
+2026-11-16 17:50:34 | INFO | root | Total parameters: 70,657,253,376
+2026-11-16 17:50:34 | INFO | root | Trainable parameters percentage: 0.15%
+2026-11-16 17:50:34 | INFO | root | Param L2 norm: 4143.7220
+2026-11-16 17:50:34 | INFO | root | --------------------------------
+2026-11-16 17:50:34 | INFO | root | Using model config to instantiate tokenizer
+2026-11-16 17:50:34 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B "HTTP/1.1 200 OK"
+2026-11-16 17:50:34 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B "HTTP/1.1 200 OK"
+2026-11-16 17:50:35 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-11-16 17:50:35 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-11-16 17:50:36 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B "HTTP/1.1 200 OK"
+2026-11-16 17:50:36 | WARNING | nemo_automodel._transformers.tokenization.nemo_auto_tokenizer | Tokenizer 'ichanchiu/Llama-3.1-Omni-FinAI-70B' has pad_token_id=None; defaulting to 0. This can cause incorrect MoE auxiliary loss calculations if valid tokens share token ID 0. Set pad_token_id explicitly in your tokenizer config to avoid this.
+2026-11-16 17:50:37 | INFO | httpx2 | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/json/json.py "HTTP/1.1 200 OK"
+[Gloo] Rank 1 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank [Gloo] Rank 3 is connected to 23 is connected to  peer ranks. 3Expected number of connected peer ranks is :  peer ranks. 3Expected number of connected peer ranks is : 3
+
+[Gloo] Rank 0 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+2026-11-16 17:50:37 | INFO | httpx2 | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/json/json.py "HTTP/1.1 200 OK"
+[Gloo] Rank 1 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 0 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 3 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 2 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+2026-11-16 17:50:37 | INFO | root | Signal handler installed for SIGTERM
+2026-11-16 17:50:37 | INFO | root | Model Part 0:
+2026-11-16 17:50:37 | INFO | root | FSDPLlamaForCausalLM(
+2026-11-16 17:50:37 | INFO | root |   (model): LlamaModel(
+2026-11-16 17:50:37 | INFO | root |     (embed_tokens): Embedding(128256, 8192)
+2026-11-16 17:50:37 | INFO | root |     (layers): ModuleList(
+2026-11-16 17:50:37 | INFO | root |       (0-79): 80 x FSDPLlamaDecoderLayer(
+2026-11-16 17:50:37 | INFO | root |         (self_attn): LlamaAttention(
+2026-11-16 17:50:37 | INFO | root |           (q_proj): PatchedLinearLoRA(
+2026-11-16 17:50:37 | INFO | root |             in_features=8192, out_features=8192, bias=False
+2026-11-16 17:50:37 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:50:37 | INFO | root |             (lora_B): Linear(in_features=8, out_features=8192, bias=False)
+2026-11-16 17:50:37 | INFO | root |           )
+2026-11-16 17:50:37 | INFO | root |           (k_proj): PatchedLinearLoRA(
+2026-11-16 17:50:37 | INFO | root |             in_features=8192, out_features=1024, bias=False
+2026-11-16 17:50:37 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:50:37 | INFO | root |             (lora_B): Linear(in_features=8, out_features=1024, bias=False)
+2026-11-16 17:50:37 | INFO | root |           )
+2026-11-16 17:50:37 | INFO | root |           (v_proj): PatchedLinearLoRA(
+2026-11-16 17:50:37 | INFO | root |             in_features=8192, out_features=1024, bias=False
+2026-11-16 17:50:37 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:50:37 | INFO | root |             (lora_B): Linear(in_features=8, out_features=1024, bias=False)
+2026-11-16 17:50:37 | INFO | root |           )
+2026-11-16 17:50:37 | INFO | root |           (o_proj): PatchedLinearLoRA(
+2026-11-16 17:50:37 | INFO | root |             in_features=8192, out_features=8192, bias=False
+2026-11-16 17:50:37 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:50:37 | INFO | root |             (lora_B): Linear(in_features=8, out_features=8192, bias=False)
+2026-11-16 17:50:37 | INFO | root |           )
+2026-11-16 17:50:37 | INFO | root |         )
+2026-11-16 17:50:37 | INFO | root |         (mlp): LlamaMLP(
+2026-11-16 17:50:37 | INFO | root |           (gate_proj): PatchedLinearLoRA(
+2026-11-16 17:50:37 | INFO | root |             in_features=8192, out_features=28672, bias=False
+2026-11-16 17:50:37 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:50:37 | INFO | root |             (lora_B): Linear(in_features=8, out_features=28672, bias=False)
+2026-11-16 17:50:37 | INFO | root |           )
+2026-11-16 17:50:37 | INFO | root |           (up_proj): PatchedLinearLoRA(
+2026-11-16 17:50:37 | INFO | root |             in_features=8192, out_features=28672, bias=False
+2026-11-16 17:50:37 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:50:37 | INFO | root |             (lora_B): Linear(in_features=8, out_features=28672, bias=False)
+2026-11-16 17:50:37 | INFO | root |           )
+2026-11-16 17:50:37 | INFO | root |           (down_proj): PatchedLinearLoRA(
+2026-11-16 17:50:37 | INFO | root |             in_features=28672, out_features=8192, bias=False
+2026-11-16 17:50:37 | INFO | root | ...
+2026-11-16 17:50:37 | INFO | root | Optimizer:
+2026-11-16 17:50:37 | INFO | root | AdamW (
+2026-11-16 17:50:37 | INFO | root | Parameter Group 0
+2026-11-16 17:50:37 | INFO | root |     amsgrad: False
+2026-11-16 17:50:37 | INFO | root |     betas: (0.9, 0.999)
+2026-11-16 17:50:37 | INFO | root |     capturable: False
+2026-11-16 17:50:37 | INFO | root |     decoupled_weight_decay: True
+2026-11-16 17:50:37 | INFO | root |     differentiable: False
+2026-11-16 17:50:37 | INFO | root |     eps: 1e-08
+2026-11-16 17:50:37 | INFO | root |     foreach: None
+2026-11-16 17:50:37 | INFO | root |     fused: None
+2026-11-16 17:50:37 | INFO | root |     lr: 2e-05
+2026-11-16 17:50:37 | INFO | root |     maximize: False
+2026-11-16 17:50:37 | INFO | root |     weight_decay: 0.01
+2026-11-16 17:50:37 | INFO | root | )
+2026-11-16 17:50:37 | INFO | root | LR scheduler: <unavailable>
+2026-11-16 17:50:37 | INFO | root | Step scheduler:
+2026-11-16 17:50:37 | INFO | root | - Gradient accumulation steps: 1
+2026-11-16 17:50:37 | INFO | root | - Checkpoint every steps: 12
+2026-11-16 17:50:37 | INFO | root | - Garbage collect every steps: None
+2026-11-16 17:50:37 | INFO | root | - Current Epoch: 0
+2026-11-16 17:50:37 | INFO | root | - Number of epochs: 2
+2026-11-16 17:50:37 | INFO | root | - Validation every steps: 12
+2026-11-16 17:50:37 | INFO | root | - Max train steps: 12
+2026-11-16 17:50:37 | INFO | root | - Checkpoint retention: disabled; keeping all checkpoints (checkpoint.max_recent_checkpoints=None)
+
+Training:   0%|          | 0/12 [00:00<?, ?step/s][transformers] `use_return_dict` is deprecated! Use `return_dict` instead!
+2026-11-16 17:50:48 | INFO | root | step 0 | epoch 0 | loss 1.1410 | grad_norm 5.2510 | lr 2.00e-05 | mem 44.01 GiB | tps 33.96(8.49/gpu) | num_label_tokens 61
+
+Training:   0%|          | 0/12 [00:10<?, ?step/s, loss=1.1410, lr=2.00e-05, tps=34]
+Training:   8%|▊         | 1/12 [00:10<02:00, 10.96s/step, loss=1.1410, lr=2.00e-05, tps=34]2026-11-16 17:50:49 | INFO | root | step 1 | epoch 0 | loss 1.4360 | grad_norm 4.8914 | lr 2.00e-05 | mem 44.09 GiB | tps 301.22(75.31/gpu) | num_label_tokens 45
+
+Training:   8%|▊         | 1/12 [00:11<02:00, 10.96s/step, loss=1.4360, lr=2.00e-05, tps=301]
+Training:  17%|█▋        | 2/12 [00:11<00:51,  5.12s/step, loss=1.4360, lr=2.00e-05, tps=301]2026-11-16 17:50:50 | INFO | root | step 2 | epoch 0 | loss 0.9954 | grad_norm 3.1451 | lr 2.00e-05 | mem 44.11 GiB | tps 367.10(91.78/gpu) | num_label_tokens 59
+
+Training:  17%|█▋        | 2/12 [00:12<00:51,  5.12s/step, loss=0.9954, lr=2.00e-05, tps=367]
+Training:  25%|██▌       | 3/12 [00:12<00:29,  3.23s/step, loss=0.9954, lr=2.00e-05, tps=367]2026-11-16 17:50:51 | INFO | root | step 3 | epoch 0 | loss 0.9524 | grad_norm 2.7740 | lr 2.00e-05 | mem 44.14 GiB | tps 388.92(97.23/gpu) | num_label_tokens 61
+
+Training:  25%|██▌       | 3/12 [00:13<00:29,  3.23s/step, loss=0.9524, lr=2.00e-05, tps=389]
+Training:  33%|███▎      | 4/12 [00:13<00:18,  2.33s/step, loss=0.9524, lr=2.00e-05, tps=389]2026-11-16 17:50:52 | INFO | root | step 4 | epoch 0 | loss 1.1677 | grad_norm 5.9045 | lr 2.00e-05 | mem 44.09 GiB | tps 371.75(92.94/gpu) | num_label_tokens 46
+
+Training:  33%|███▎      | 4/12 [00:14<00:18,  2.33s/step, loss=1.1677, lr=2.00e-05, tps=372]
+Training:  42%|████▏     | 5/12 [00:14<00:12,  1.83s/step, loss=1.1677, lr=2.00e-05, tps=372]2026-11-16 17:50:53 | INFO | root | step 5 | epoch 0 | loss 0.8211 | grad_norm 3.5019 | lr 2.00e-05 | mem 44.15 GiB | tps 373.09(93.27/gpu) | num_label_tokens 60
+
+Training:  42%|████▏     | 5/12 [00:15<00:12,  1.83s/step, loss=0.8211, lr=2.00e-05, tps=373]
+Training:  50%|█████     | 6/12 [00:15<00:09,  1.54s/step, loss=0.8211, lr=2.00e-05, tps=373]2026-11-16 17:50:54 | INFO | root | step 6 | epoch 0 | loss 0.7910 | grad_norm 2.5605 | lr 2.00e-05 | mem 44.14 GiB | tps 362.12(90.53/gpu) | num_label_tokens 59
+
+Training:  50%|█████     | 6/12 [00:16<00:09,  1.54s/step, loss=0.7910, lr=2.00e-05, tps=362]
+Training:  58%|█████▊    | 7/12 [00:16<00:06,  1.37s/step, loss=0.7910, lr=2.00e-05, tps=362]2026-11-16 17:50:55 | INFO | root | step 7 | epoch 0 | loss 0.8168 | grad_norm 12.3301 | lr 2.00e-05 | mem 44.09 GiB | tps 348.43(87.11/gpu) | num_label_tokens 45
+
+Training:  58%|█████▊    | 7/12 [00:17<00:06,  1.37s/step, loss=0.8168, lr=2.00e-05, tps=348]
+Training:  67%|██████▋   | 8/12 [00:17<00:04,  1.25s/step, loss=0.8168, lr=2.00e-05, tps=348]2026-11-16 17:50:56 | INFO | root | step 8 | epoch 0 | loss 0.5519 | grad_norm 4.6534 | lr 2.00e-05 | mem 44.14 GiB | tps 370.13(92.53/gpu) | num_label_tokens 61
+
+Training:  67%|██████▋   | 8/12 [00:18<00:04,  1.25s/step, loss=0.5519, lr=2.00e-05, tps=370]
+Training:  75%|███████▌  | 9/12 [00:18<00:03,  1.18s/step, loss=0.5519, lr=2.00e-05, tps=370]2026-11-16 17:50:57 | INFO | root | step 9 | epoch 0 | loss 0.5094 | grad_norm 2.6009 | lr 2.00e-05 | mem 44.09 GiB | tps 344.93(86.23/gpu) | num_label_tokens 60
+
+Training:  75%|███████▌  | 9/12 [00:19<00:03,  1.18s/step, loss=0.5094, lr=2.00e-05, tps=345]
+Training:  83%|████████▎ | 10/12 [00:19<00:02,  1.13s/step, loss=0.5094, lr=2.00e-05, tps=345]2026-11-16 17:50:58 | INFO | root | step 10 | epoch 0 | loss 0.5770 | grad_norm 3.2255 | lr 2.00e-05 | mem 44.09 GiB | tps 341.55(85.39/gpu) | num_label_tokens 45
+
+Training:  83%|████████▎ | 10/12 [00:20<00:02,  1.13s/step, loss=0.5770, lr=2.00e-05, tps=342]
+Training:  92%|█████████▏| 11/12 [00:20<00:01,  1.11s/step, loss=0.5770, lr=2.00e-05, tps=342]2026-11-16 17:50:59 | INFO | root | step 11 | epoch 0 | loss 0.3016 | grad_norm 1.8478 | lr 2.00e-05 | mem 44.15 GiB | tps 350.25(87.56/gpu) | num_label_tokens 60
+
+Training:  92%|█████████▏| 11/12 [00:21<00:01,  1.11s/step, loss=0.3016, lr=2.00e-05, tps=350]
+Training: 100%|██████████| 12/12 [00:21<00:00,  1.08s/step, loss=0.3016, lr=2.00e-05, tps=350]2026-11-16 17:51:01 | INFO | root | [val] name "default" | step 11 | epoch 0 | loss 0.3694 | lr 2.00e-05 | num_label_tokens 165
+2026-11-16 17:51:01 | INFO | nemo_automodel.recipes.base_recipe | Saving checkpoint to [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T094617-5116b663/checkpoints/epoch_0_step_11
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  return func(*args, **kwargs)
+2026-11-16 17:51:05 | INFO | nemo_automodel.components.checkpoint.lifecycle | Updated LOWEST_VAL checkpoint symlink to epoch_0_step_11 (val_loss=0.3694)
+
+Training: 100%|██████████| 12/12 [00:27<00:00,  2.26s/step, loss=0.3016, lr=2.00e-05, tps=350]
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T094617-5116b663/automodel.yaml

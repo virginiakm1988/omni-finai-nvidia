@@ -1,0 +1,38 @@
+{
+  "command": "train",
+  "mode": "live",
+  "status": "failed",
+  "config": {
+    "project": "omni-finai",
+    "profile": "small",
+    "seed": 42,
+    "max_requests": 10,
+    "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "base_url": "https://integrate.api.nvidia.com/v1",
+    "profiles": {
+      "original": {
+        "model_id": "ichanchiu/Llama-3.1-Omni-FinAI-70B",
+        "revision": "8f9e1ccba75181c7ca95df77e8313a76bfdd4a50",
+        "gated": false,
+        "min_free_disk_gib": 150
+      },
+      "small": {
+        "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+        "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "gated": true,
+        "min_free_disk_gib": 3
+      }
+    },
+    "max_new_tokens": 160,
+    "train_steps": 12,
+    "train_size": 48,
+    "validation_size": 12,
+    "test_size": 12
+  },
+  "config_sha256": "2038f5e8017b4adeb27cdacd8845edbd6b782935bd84580b78525af8e57ae6fa",
+  "started_at": "2026-11-16T09:21:09.404006+00:00",
+  "python": "3.12.16",
+  "error": "Command '['[validation-workspace]/runtime/automodel-0.7-py312/bin/automodel', '--nproc-per-node=1', '[validation-workspace]/repos/omni-finai-nvidia/runs/automodel-small/20261116T092109-9fd76b2a/automodel.yaml']' returned non-zero exit status 1.",
+  "error_type": "CalledProcessError",
+  "elapsed_seconds": 97.9195
+}

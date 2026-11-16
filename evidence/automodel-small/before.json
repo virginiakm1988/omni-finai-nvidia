@@ -1,0 +1,126 @@
+{
+  "predictions": [
+    {
+      "id": "test-000",
+      "task": "extract",
+      "prediction": "1\n{\n  \"revenue_million\": 930,\n  \"net_income_million\": 105\n}",
+      "checks": {
+        "revenue_million": 930,
+        "net_income_million": 105
+      }
+    },
+    {
+      "id": "test-001",
+      "task": "qa",
+      "prediction": "36.7% To find the year-over-year revenue growth percentage, we use the formula:\n\n\\[\n\\text{Year-over-year growth} = \\left( \\frac{\\text{Revenue in previous period}}{\\text{Revenue in current period}} - 1 \\right) \\times 100\n\\]\n\nGiven:\n- Revenue in 2024: $950 million\n- Revenue in 2025: $1150 million\n\nPlugging these values into the formula:\n\n\\[\n\\text{Year-over-year growth} = \\left( \\frac{1150}{950} - 1 \\right) \\times 100\n\\]\n\nFirst, calculate the fraction:\n\n\\[\n\\frac{",
+      "checks": {
+        "growth_percent": 21.05
+      }
+    },
+    {
+      "id": "test-002",
+      "task": "summary",
+      "prediction": "2025 Revenue: USD 1300 million; 2025 Net Income: USD 35 million.\nThe fictional test company reported a revenue of $1300 million in 2025 and generated a net income of $35 million. This is an example of a fictitious data point used to illustrate the financial performance of a fictional company. In reality, companies would have actual revenue and net income figures that reflect their operations and market conditions. The use of these hypothetical figures serves as a basis for discussion or analysis without any reference to real-world financial data. \n\nTo provide more context:\n\n- **Revenue**: The amount of money a company earns from selling its products or services.\n- **Net Income**: The profit made by a company after deduct",
+      "checks": {
+        "revenue_million": 1300,
+        "net_income_million": 35
+      }
+    },
+    {
+      "id": "test-003",
+      "task": "extract",
+      "prediction": "1\n{\n  \"revenue_million\": 1180,\n  \"net_income_million\": 30\n}",
+      "checks": {
+        "revenue_million": 1180,
+        "net_income_million": 30
+      }
+    },
+    {
+      "id": "test-004",
+      "task": "qa",
+      "prediction": "86.79% To find the year-over-year revenue growth percentage, we use the formula:\n\n\\[\n\\text{Year-over-year growth} = \\left( \\frac{\\text{Revenue in previous period}}{\\text{Revenue in current period}} - 1 \\right) \\times 100\n\\]\n\nGiven:\n- Revenue in 2024: $1130 million\n- Revenue in 2025: $1330 million\n\nPlugging these values into the formula:\n\n\\[\n\\text{Year-over-year growth} = \\left( \\frac{1130}{1330} - 1 \\right) \\times 100\n\\]\n\nFirst, calculate the fraction:\n\n\\[\n",
+      "checks": {
+        "growth_percent": 17.7
+      }
+    },
+    {
+      "id": "test-005",
+      "task": "summary",
+      "prediction": "2025 Revenue: USD 735 million; 2025 Net Income: USD 80 million.\nThe fictional test company reported a significant increase in revenue from USD 580 million to USD 735 million over the course of the year 2025, while its net income remained at USD 80 million despite the rise in revenue. This demonstrates an improvement in financial performance relative to the previous fiscal year. The figures highlight the potential growth opportunities within the company's business operations. \n\nTo summarize this information concisely:\n\n- **Revenue:** USD 735 million\n- **Net Income:** USD 80 million\n\nThis summary captures the key financial metrics for the fictional test company in 2025, providing a",
+      "checks": {
+        "revenue_million": 735,
+        "net_income_million": 80
+      }
+    },
+    {
+      "id": "test-006",
+      "task": "extract",
+      "prediction": "1\n{\n  \"revenue_million\": 985,\n  \"net_income_million\": 25\n}",
+      "checks": {
+        "revenue_million": 985,
+        "net_income_million": 25
+      }
+    },
+    {
+      "id": "test-007",
+      "task": "qa",
+      "prediction": "38.9% To find the year-over-year revenue growth percentage, we use the formula:\n\n\\[\n\\text{Year-over-year growth} = \\left( \\frac{\\text{Revenue in previous period}}{\\text{Revenue in current period}} - 1 \\right) \\times 100\n\\]\n\nGiven:\n- Revenue in 2024: USD 1460 million\n- Revenue in 2025: USD 1455 million\n\nPlugging these values into the formula:\n\n\\[\n\\text{Year-over-year growth} = \\left( \\frac{1455}{1460} - 1 \\right) \\times 100\n\\]\n\nFirst, calculate the fraction:\n\n\\",
+      "checks": {
+        "growth_percent": -0.34
+      }
+    },
+    {
+      "id": "test-008",
+      "task": "summary",
+      "prediction": "2025 Revenue: USD 705 million; 2025 Net Income: USD 40 million.\nThe fictional test company reported a significant increase in revenue from USD 600 million to USD 705 million in the fiscal year 2025, while its net income increased by USD 40 million from USD 600 million to USD 40 million. This represents an impressive growth rate of 13% in revenue and a 29% increase in net income over the same period. The rise in revenue is attributed to the expansion of the company's product line and market reach, as well as the successful launch of new products that have been well-received by customers. Conversely, the modest increase in net income suggests",
+      "checks": {
+        "revenue_million": 705,
+        "net_income_million": 40
+      }
+    },
+    {
+      "id": "test-009",
+      "task": "extract",
+      "prediction": "1\n{\n  \"revenue_million\": 420,\n  \"net_income_million\": 115\n}",
+      "checks": {
+        "revenue_million": 420,
+        "net_income_million": 115
+      }
+    },
+    {
+      "id": "test-010",
+      "task": "qa",
+      "prediction": "36.7% To find the year-over-year revenue growth percentage, we use the formula:\n\n\\[\n\\text{Year-over-year growth} = \\left( \\frac{\\text{Revenue in previous period}}{\\text{Revenue in current period}} - 1 \\right) \\times 100\n\\]\n\nGiven:\n- Revenue in 2024: $1190 million\n- Revenue in 2025: $1280 million\n\nPlugging these values into the formula:\n\n\\[\n\\text{Year-over-year growth} = \\left( \\frac{1280}{1190} - 1 \\right) \\times 100\n\\]\n\nFirst, calculate the fraction:\n\n\\[\n\\",
+      "checks": {
+        "growth_percent": 7.56
+      }
+    },
+    {
+      "id": "test-011",
+      "task": "summary",
+      "prediction": "2025 Revenue: USD 730 million; 2025 Net Income: USD 80 million.\nThe fictional test company reported a significant increase in revenue from USD 720 million to USD 730 million over the course of the year, while its net income increased by USD 80 million from USD 720 million to USD 80 million. This represents an impressive growth rate of 16% in revenue and a 20% increase in net income. The rise in revenue is attributed to the expansion of the company's product line and market reach, as well as the successful launch of new products that have been well-received by customers. Conversely, the increase in net income reflects the continued profitability of the company despite the",
+      "checks": {
+        "revenue_million": 730,
+        "net_income_million": 80
+      }
+    }
+  ],
+  "metrics": {
+    "extract": {
+      "n": 4,
+      "pass_rate": 0.0,
+      "metric": "deterministic_correctness"
+    },
+    "qa": {
+      "n": 4,
+      "pass_rate": 0.0,
+      "metric": "deterministic_correctness"
+    },
+    "summary": {
+      "n": 4,
+      "pass_rate": 1.0,
+      "metric": "numeric_coverage_only"
+    }
+  },
+  "test_sha256": "938afa8d25601c4d0d346468b24e6e11e38e8e7bfef2f50dca5a1912ef78a9a8"
+}

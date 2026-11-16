@@ -1,0 +1,35 @@
+{
+  "command": "train",
+  "mode": "live",
+  "status": "running",
+  "config": {
+    "project": "omni-finai",
+    "profile": "original",
+    "seed": 42,
+    "max_requests": 10,
+    "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "base_url": "https://integrate.api.nvidia.com/v1",
+    "profiles": {
+      "original": {
+        "model_id": "ichanchiu/Llama-3.1-Omni-FinAI-70B",
+        "revision": "8f9e1ccba75181c7ca95df77e8313a76bfdd4a50",
+        "gated": false,
+        "min_free_disk_gib": 150
+      },
+      "small": {
+        "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+        "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "gated": true,
+        "min_free_disk_gib": 3
+      }
+    },
+    "max_new_tokens": 160,
+    "train_steps": 12,
+    "train_size": 48,
+    "validation_size": 12,
+    "test_size": 12
+  },
+  "config_sha256": "50bd77af26c6e4c1e6d03f6ec23e300e377991bf2a514be62f3e291c39038d5c",
+  "started_at": "2026-11-16T09:38:21.505886+00:00",
+  "python": "3.12.16"
+}

@@ -1,0 +1,96 @@
+{
+  "command": "demo",
+  "mode": "live",
+  "status": "succeeded",
+  "config": {
+    "project": "omni-finai",
+    "profile": "original",
+    "seed": 42,
+    "max_requests": 10,
+    "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "base_url": "https://integrate.api.nvidia.com/v1",
+    "profiles": {
+      "original": {
+        "model_id": "ichanchiu/Llama-3.1-Omni-FinAI-70B",
+        "revision": "8f9e1ccba75181c7ca95df77e8313a76bfdd4a50",
+        "gated": false,
+        "min_free_disk_gib": 150
+      },
+      "small": {
+        "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+        "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "gated": false,
+        "min_free_disk_gib": 3
+      }
+    },
+    "max_new_tokens": 160,
+    "train_steps": 12,
+    "train_size": 48,
+    "validation_size": 12,
+    "test_size": 12,
+    "prompt_format": "checkpoint-chat"
+  },
+  "config_sha256": "6baa89d29cf17e233471ffaace6707ef2bb993fd891811a91bf93598ffb7287c",
+  "started_at": "2026-11-16T09:43:15.538383+00:00",
+  "python": "3.12.16",
+  "result": {
+    "predictions": [
+      {
+        "id": "test-000",
+        "task": "extract",
+        "prediction": "Fictional Test Company 000 reported revenue of USD 930 million for 2025, compared with USD 970 million in 2024. These are authored teaching figures, not a real company report. Extract 2025 revenue and net income. Return JSON with revenue_million and net_income_million.\n\nFictional Test Company 000 reported revenue of USD 930 million for 2025, compared with USD 970 million in 2024. These are authored teaching figures, not a real company report. Extract JSON with revenue_million and net_income_million.\n\nFictional Test Company 000 reported revenue of USD 930 million for 2025, compared with USD 970 million in 2024. These are authored teaching figures, not a real company report. Extract",
+        "checks": {
+          "revenue_million": 930,
+          "net_income_million": 105
+        }
+      },
+      {
+        "id": "test-001",
+        "task": "qa",
+        "prediction": "Fictional Test Company 001 reported revenue of USD 1150 million for 2025, compared with USD 950 million in 2024. What was year-over-year revenue growth in percent? Round to two decimals and answer only the number. \n\nFictional Test Company 001 reported revenue of USD 1150 million for 2025, compared with USD 950 million in 2024. What was year-over-year revenue growth in percent? \n\nFictional Test Company 001 reported revenue of USD 1150 million for 2025, compared with USD 950 million in 2024. What was year-over-year revenue growth in percent? \n\nFictional Test Company 001 reported revenue of USD 1150 million for 2025, compared with USD ",
+        "checks": {
+          "growth_percent": 21.05
+        }
+      },
+      {
+        "id": "test-002",
+        "task": "summary",
+        "prediction": "References\n\nExternal links\n \n\nSoftware companies of the United States\nCompanies based in San Francisco\nSoftware companies established in 2005\n2005 establishments in California\nSoftware companies of the United States\nSoftware companies established in 2005\nCompanies based in San Francisco\nSoftware companies of the United States\n2005 establishments in California\nSoftware companies of the United States\nSoftware companies established in 2005\nCompanies based in San Francisco\nSoftware companies of the United States\nSoftware companies established in 2005\nSoftware companies of the United States\nSoftware companies established in 2005\nSoftware companies of the United States\nSoftware companies of the United States\nSoftware companies established in 2005\nSoftware companies of the United States\nSoftware companies of the United States\nSoftware companies of the United States",
+        "checks": {
+          "revenue_million": 1300,
+          "net_income_million": 35
+        }
+      }
+    ],
+    "metrics": {
+      "extract": {
+        "n": 1,
+        "pass_rate": 0.0,
+        "metric": "deterministic_correctness"
+      },
+      "qa": {
+        "n": 1,
+        "pass_rate": 0.0,
+        "metric": "deterministic_correctness"
+      },
+      "summary": {
+        "n": 1,
+        "pass_rate": 0.0,
+        "metric": "numeric_coverage_only"
+      }
+    },
+    "model_label": "ichanchiu/Llama-3.1-Omni-FinAI-70B",
+    "prompt_format": "checkpoint-chat",
+    "sdk_versions": {
+      "nemo-fabric": null,
+      "nemo-fabric-adapter-contract": null,
+      "nemo-relay": null,
+      "data-designer": null,
+      "nemo-automodel": "0.7.0",
+      "transformers": "5.18.0",
+      "torch": "2.15.0"
+    },
+    "profile": "original"
+  },
+  "elapsed_seconds": 117.8958
+}

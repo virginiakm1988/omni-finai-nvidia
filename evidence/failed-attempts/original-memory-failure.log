@@ -1,0 +1,469 @@
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+W1116 17:43:09.658000 4035137 torch/distributed/run.py:852] 
+W1116 17:43:09.658000 4035137 torch/distributed/run.py:852] *****************************************
+W1116 17:43:09.658000 4035137 torch/distributed/run.py:852] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1116 17:43:09.658000 4035137 torch/distributed/run.py:852] *****************************************
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale
+  warnings.warn(
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T093821-1e762daa/automodel.yaml
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T093821-1e762daa/automodel.yaml
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T093821-1e762daa/automodel.yaml
+cfg-path: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T093821-1e762daa/automodel.yaml
+> initializing torch distributed with 4 workers.
+2026-11-16 17:43:28 | INFO | nemo_automodel.components.loggers.log_utils | Setting logging level to 20
+2026-11-16 17:43:30 | INFO | root | Experiment_details:
+2026-11-16 17:43:30 | INFO | root | Timestamp: '2026-11-16T17:43:30'
+2026-11-16 17:43:30 | INFO | root | User: virginiac-nvid-15dda7
+2026-11-16 17:43:30 | INFO | root | Host: cnode1-002
+2026-11-16 17:43:30 | INFO | root | World size: 4
+2026-11-16 17:43:30 | INFO | root | Backend: nccl
+2026-11-16 17:43:30 | INFO | root | Recipe: TrainFinetuneRecipeForNextTokenPrediction
+2026-11-16 17:43:30 | INFO | root | Model name: ichanchiu/Llama-3.1-Omni-FinAI-70B
+recipe: TrainFinetuneRecipeForNextTokenPrediction
+seed: 42
+step_scheduler:
+  global_batch_size: 4
+  local_batch_size: 1
+  max_steps: 12
+  num_epochs: 2
+  ckpt_every_steps: 12
+  val_every_steps: 12
+dist_env:
+  backend: nccl
+  timeout_minutes: 10
+distributed:
+  strategy: fsdp2
+  dp_size: null
+  tp_size: 1
+  cp_size: 1
+model:
+  _target_: nemo_automodel.NeMoAutoModelForCausalLM.from_pretrained
+  pretrained_model_name_or_path: ichanchiu/Llama-3.1-Omni-FinAI-70B
+  revision: 8f9e1ccba75181c7ca95df77e8313a76bfdd4a50
+  dtype: bfloat16
+  attn_implementation: sdpa
+  trust_remote_code: false
+peft:
+  _target_: nemo_automodel.components._peft.lora.PeftConfig
+  target_modules: '*_proj'
+  dim: 8
+  alpha: 32
+  use_triton: false
+loss_fn:
+  _target_: nemo_automodel.components.loss.masked_ce.MaskedCrossEntropy
+dataset:
+  _target_: nemo_automodel.components.datasets.llm.column_mapped_text_instruction_dataset.ColumnMappedTextInstructionDataset
+  path_or_dataset_id: [validation-workspace]/repos/omni-finai-nvidia/data/generated/train.jsonl
+  column_mapping:
+    context: context
+    question: question
+    answer: answer
+  seq_length: 512
+  answer_only_loss_mask: true
+  padding: do_not_pad
+  truncation: do_not_truncate
+  use_hf_chat_template: false
+validation_dataset:
+  _target_: nemo_automodel.components.datasets.llm.column_mapped_text_instruction_dataset.ColumnMappedTextInstructionDataset
+  path_or_dataset_id: [validation-workspace]/repos/omni-finai-nvidia/data/generated/validation.jsonl
+  column_mapping:
+    context: context
+    question: question
+    answer: answer
+  seq_length: 512
+  answer_only_loss_mask: true
+  padding: do_not_pad
+  truncation: do_not_truncate
+  use_hf_chat_template: false
+dataloader:
+  _target_: torchdata.stateful_dataloader.StatefulDataLoader
+  collate_fn:
+    _target_: nemo_automodel.components.datasets.utils.default_collater
+  shuffle: false
+validation_dataloader:
+  _target_: torchdata.stateful_dataloader.StatefulDataLoader
+  collate_fn:
+    _target_: nemo_automodel.components.datasets.utils.default_collater
+  shuffle: false
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 2.0e-05
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  weight_decay: 0.01
+checkpoint:
+  enabled: true
+  checkpoint_dir: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-original/20261116T093821-1e762daa/checkpoints
+  model_save_format: safetensors
+  save_consolidated: final
+2026-11-16 17:43:30 | INFO | root | Library versions:
+2026-11-16 17:43:30 | INFO | root | - nemo_automodel: 0.7.0 ([validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/__init__.py)
+2026-11-16 17:43:30 | INFO | root | - transformers: 5.18.0 ([validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/__init__.py)
+2026-11-16 17:43:30 | INFO | root | - torch: 2.10.0+cu128 CUDA 12.8
+2026-11-16 17:43:30 | INFO | root | No clip_grad_norm.max_norm specified in config, using default value of 1.0
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+
+Fetching 38 files:   0%|          | 0/38 [00:00<?, ?it/s]
+Fetching 38 files: 100%|██████████| 38/38 [00:00<00:00, 2125.57it/s]
+[Gloo] Rank 1 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 0 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 2 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 3 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+2026-11-16 17:43:30 | INFO | nemo_automodel._transformers.model_init | Using custom model implementation for LlamaForCausalLM
+
+Fetching 38 files:   0%|          | 0/38 [00:00<?, ?it/s]
+Fetching 38 files:   0%|          | 0/38 [00:00<?, ?it/s]
+Fetching 38 files:   0%|          | 0/38 [00:00<?, ?it/s]
+Fetching 38 files: 100%|██████████| 38/38 [00:00<00:00, 1675.92it/s]
+
+Fetching 38 files: 100%|██████████| 38/38 [00:00<00:00, 1646.69it/s]
+
+Fetching 38 files: 100%|██████████| 38/38 [00:00<00:00, 1654.39it/s]
+[LlamaForCausalLM] Attention implementation: sdpa
+[LlamaForCausalLM] torch_dtype: torch.bfloat16
+2026-11-16 17:43:31 | INFO | nemo_automodel.components.distributed.parallelizer | Structurally discovered layer groups for LlamaForCausalLM: ('language',)
+2026-11-16 17:43:53 | INFO | root | load_model: 131.42 GB loaded in 20.83s (6.31 GB/s overall | destinations 0.07s, storage read 20.64s, adapt 0.00s, install 0.12s)
+2026-11-16 17:43:55 | INFO | root | Model summary:
+2026-11-16 17:43:55 | INFO | root | --------------------------------
+2026-11-16 17:43:55 | INFO | root | Trainable parameters: 103,546,880
+2026-11-16 17:43:55 | INFO | root | Total parameters: 70,657,253,376
+2026-11-16 17:43:55 | INFO | root | Trainable parameters percentage: 0.15%
+2026-11-16 17:43:55 | INFO | root | Param L2 norm: 4143.7220
+2026-11-16 17:43:55 | INFO | root | --------------------------------
+2026-11-16 17:43:55 | INFO | root | Using model config to instantiate tokenizer
+2026-11-16 17:43:55 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B "HTTP/1.1 200 OK"
+2026-11-16 17:43:56 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B "HTTP/1.1 200 OK"
+2026-11-16 17:43:56 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-11-16 17:43:56 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-11-16 17:43:57 | INFO | httpx2 | HTTP Request: GET https://huggingface.co/api/models/ichanchiu/Llama-3.1-Omni-FinAI-70B "HTTP/1.1 200 OK"
+2026-11-16 17:43:57 | WARNING | nemo_automodel._transformers.tokenization.nemo_auto_tokenizer | Tokenizer 'ichanchiu/Llama-3.1-Omni-FinAI-70B' has pad_token_id=None; defaulting to 0. This can cause incorrect MoE auxiliary loss calculations if valid tokens share token ID 0. Set pad_token_id explicitly in your tokenizer config to avoid this.
+2026-11-16 17:43:58 | INFO | httpx2 | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/json/json.py "HTTP/1.1 200 OK"
+[Gloo] Rank 1 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 0 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 3 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 2 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+2026-11-16 17:43:58 | INFO | httpx2 | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/json/json.py "HTTP/1.1 200 OK"
+[Gloo] Rank 0 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 1 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 3 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+[Gloo] Rank 2 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+2026-11-16 17:43:59 | INFO | root | Signal handler installed for SIGTERM
+2026-11-16 17:43:59 | INFO | root | Model Part 0:
+2026-11-16 17:43:59 | INFO | root | FSDPLlamaForCausalLM(
+2026-11-16 17:43:59 | INFO | root |   (model): LlamaModel(
+2026-11-16 17:43:59 | INFO | root |     (embed_tokens): Embedding(128256, 8192)
+2026-11-16 17:43:59 | INFO | root |     (layers): ModuleList(
+2026-11-16 17:43:59 | INFO | root |       (0-79): 80 x FSDPLlamaDecoderLayer(
+2026-11-16 17:43:59 | INFO | root |         (self_attn): LlamaAttention(
+2026-11-16 17:43:59 | INFO | root |           (q_proj): PatchedLinearLoRA(
+2026-11-16 17:43:59 | INFO | root |             in_features=8192, out_features=8192, bias=False
+2026-11-16 17:43:59 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:43:59 | INFO | root |             (lora_B): Linear(in_features=8, out_features=8192, bias=False)
+2026-11-16 17:43:59 | INFO | root |           )
+2026-11-16 17:43:59 | INFO | root |           (k_proj): PatchedLinearLoRA(
+2026-11-16 17:43:59 | INFO | root |             in_features=8192, out_features=1024, bias=False
+2026-11-16 17:43:59 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:43:59 | INFO | root |             (lora_B): Linear(in_features=8, out_features=1024, bias=False)
+2026-11-16 17:43:59 | INFO | root |           )
+2026-11-16 17:43:59 | INFO | root |           (v_proj): PatchedLinearLoRA(
+2026-11-16 17:43:59 | INFO | root |             in_features=8192, out_features=1024, bias=False
+2026-11-16 17:43:59 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:43:59 | INFO | root |             (lora_B): Linear(in_features=8, out_features=1024, bias=False)
+2026-11-16 17:43:59 | INFO | root |           )
+2026-11-16 17:43:59 | INFO | root |           (o_proj): PatchedLinearLoRA(
+2026-11-16 17:43:59 | INFO | root |             in_features=8192, out_features=8192, bias=False
+2026-11-16 17:43:59 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:43:59 | INFO | root |             (lora_B): Linear(in_features=8, out_features=8192, bias=False)
+2026-11-16 17:43:59 | INFO | root |           )
+2026-11-16 17:43:59 | INFO | root |         )
+2026-11-16 17:43:59 | INFO | root |         (mlp): LlamaMLP(
+2026-11-16 17:43:59 | INFO | root |           (gate_proj): PatchedLinearLoRA(
+2026-11-16 17:43:59 | INFO | root |             in_features=8192, out_features=28672, bias=False
+2026-11-16 17:43:59 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:43:59 | INFO | root |             (lora_B): Linear(in_features=8, out_features=28672, bias=False)
+2026-11-16 17:43:59 | INFO | root |           )
+2026-11-16 17:43:59 | INFO | root |           (up_proj): PatchedLinearLoRA(
+2026-11-16 17:43:59 | INFO | root |             in_features=8192, out_features=28672, bias=False
+2026-11-16 17:43:59 | INFO | root |             (lora_A): Linear(in_features=8192, out_features=8, bias=False)
+2026-11-16 17:43:59 | INFO | root |             (lora_B): Linear(in_features=8, out_features=28672, bias=False)
+2026-11-16 17:43:59 | INFO | root |           )
+2026-11-16 17:43:59 | INFO | root |           (down_proj): PatchedLinearLoRA(
+2026-11-16 17:43:59 | INFO | root |             in_features=28672, out_features=8192, bias=False
+2026-11-16 17:43:59 | INFO | root | ...
+2026-11-16 17:43:59 | INFO | root | Optimizer:
+2026-11-16 17:43:59 | INFO | root | AdamW (
+2026-11-16 17:43:59 | INFO | root | Parameter Group 0
+2026-11-16 17:43:59 | INFO | root |     amsgrad: False
+2026-11-16 17:43:59 | INFO | root |     betas: (0.9, 0.999)
+2026-11-16 17:43:59 | INFO | root |     capturable: False
+2026-11-16 17:43:59 | INFO | root |     decoupled_weight_decay: True
+2026-11-16 17:43:59 | INFO | root |     differentiable: False
+2026-11-16 17:43:59 | INFO | root |     eps: 1e-08
+2026-11-16 17:43:59 | INFO | root |     foreach: None
+2026-11-16 17:43:59 | INFO | root |     fused: None
+2026-11-16 17:43:59 | INFO | root |     lr: 2e-05
+2026-11-16 17:43:59 | INFO | root |     maximize: False
+2026-11-16 17:43:59 | INFO | root |     weight_decay: 0.01
+2026-11-16 17:43:59 | INFO | root | )
+2026-11-16 17:43:59 | INFO | root | LR scheduler: <unavailable>
+2026-11-16 17:43:59 | INFO | root | Step scheduler:
+2026-11-16 17:43:59 | INFO | root | - Gradient accumulation steps: 1
+2026-11-16 17:43:59 | INFO | root | - Checkpoint every steps: 12
+2026-11-16 17:43:59 | INFO | root | - Garbage collect every steps: None
+2026-11-16 17:43:59 | INFO | root | - Current Epoch: 0
+2026-11-16 17:43:59 | INFO | root | - Number of epochs: 2
+2026-11-16 17:43:59 | INFO | root | - Validation every steps: 12
+2026-11-16 17:43:59 | INFO | root | - Max train steps: 12
+2026-11-16 17:43:59 | INFO | root | - Checkpoint retention: disabled; keeping all checkpoints (checkpoint.max_recent_checkpoints=None)
+
+Training:   0%|          | 0/12 [00:00<?, ?step/s][transformers] `use_return_dict` is deprecated! Use `return_dict` instead!
+
+Training:   0%|          | 0/12 [00:00<?, ?step/s]
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1882, in <module>
+[rank1]:     main()
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1878, in main
+[rank1]:     trainer.run_train_validation_loop()
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1118, in run_train_validation_loop
+[rank1]:     train_log_data = self._run_train_optim_step(batches, self.max_grad_norm)
+[rank1]:                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1493, in _run_train_optim_step
+[rank1]:     self._forward_backward_step(
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1349, in _forward_backward_step
+[rank1]:     out = model(**batch)
+[rank1]:           ^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1882, in _call_impl
+[rank1]:     return inner()
+[rank1]:            ^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1830, in inner
+[rank1]:     result = forward_call(*args, **kwargs)
+[rank1]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/utils/generic.py", line 939, in wrapper
+[rank1]:     output = func(self, *args, **kwargs)
+[rank1]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/components/models/llama/model.py", line 693, in forward
+[rank1]:     outputs: BaseModelOutputWithPast = self.model(
+[rank1]:                                        ^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/utils/generic.py", line 1068, in wrapper
+[rank1]:     output = func(self, *args, **kwargs)
+[rank1]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 287, in wrapper
+[rank1]:     outputs = func(self, *args, **kwargs)
+[rank1]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/components/models/llama/model.py", line 499, in forward
+[rank1]:     hidden_states = decoder_layer(
+[rank1]:                     ^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/modeling_layers.py", line 110, in __call__
+[rank1]:     return super().__call__(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1882, in _call_impl
+[rank1]:     return inner()
+[rank1]:            ^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1809, in inner
+[rank1]:     args_kwargs_result = hook(self, args, kwargs)  # type: ignore[misc]
+[rank1]:                          ^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_state.py", line 62, in fsdp_hook_wrapper
+[rank1]:     return torch._dynamo.disable(
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 1181, in _fn
+[rank1]:     return fn(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_state.py", line 253, in _pre_forward
+[rank1]:     args, kwargs = self._fsdp_param_group.pre_forward(module, args, kwargs)
+[rank1]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_param_group.py", line 448, in pre_forward
+[rank1]:     self.unshard(self.unshard_async_op)
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_param_group.py", line 338, in unshard
+[rank1]:     self._all_gather_result = foreach_all_gather(
+[rank1]:                               ^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[rank1]:     return func(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_collectives.py", line 262, in foreach_all_gather
+[rank1]:     all_gather_output = all_gather_comm.allocate(
+[rank1]:                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_collectives.py", line 59, in allocate
+[rank1]:     return torch.empty(*size, dtype=dtype, device=device)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.60 GiB. GPU 1 has a total capacity of 79.18 GiB of which 224.62 MiB is free. Process 4031101 has 35.76 GiB memory in use. Including non-PyTorch memory, this process has 43.19 GiB memory in use. Of the allocated memory 40.73 GiB is allocated by PyTorch, and 22.57 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1882, in <module>
+[rank2]:     main()
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1878, in main
+[rank2]:     trainer.run_train_validation_loop()
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1118, in run_train_validation_loop
+[rank2]:     train_log_data = self._run_train_optim_step(batches, self.max_grad_norm)
+[rank2]:                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1493, in _run_train_optim_step
+[rank2]:     self._forward_backward_step(
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1349, in _forward_backward_step
+[rank2]:     out = model(**batch)
+[rank2]:           ^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+[rank2]:     return self._call_impl(*args, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1882, in _call_impl
+[rank2]:     return inner()
+[rank2]:            ^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1830, in inner
+[rank2]:     result = forward_call(*args, **kwargs)
+[rank2]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/utils/generic.py", line 939, in wrapper
+[rank2]:     output = func(self, *args, **kwargs)
+[rank2]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/components/models/llama/model.py", line 693, in forward
+[rank2]:     outputs: BaseModelOutputWithPast = self.model(
+[rank2]:                                        ^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+[rank2]:     return self._call_impl(*args, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+[rank2]:     return forward_call(*args, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/utils/generic.py", line 1068, in wrapper
+[rank2]:     output = func(self, *args, **kwargs)
+[rank2]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 287, in wrapper
+[rank2]:     outputs = func(self, *args, **kwargs)
+[rank2]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/components/models/llama/model.py", line 499, in forward
+[rank2]:     hidden_states = decoder_layer(
+[rank2]:                     ^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/modeling_layers.py", line 110, in __call__
+[rank2]:     return super().__call__(*args, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+[rank2]:     return self._call_impl(*args, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1882, in _call_impl
+[rank2]:     return inner()
+[rank2]:            ^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1809, in inner
+[rank2]:     args_kwargs_result = hook(self, args, kwargs)  # type: ignore[misc]
+[rank2]:                          ^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_state.py", line 62, in fsdp_hook_wrapper
+[rank2]:     return torch._dynamo.disable(
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 1181, in _fn
+[rank2]:     return fn(*args, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_state.py", line 253, in _pre_forward
+[rank2]:     args, kwargs = self._fsdp_param_group.pre_forward(module, args, kwargs)
+[rank2]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_param_group.py", line 448, in pre_forward
+[rank2]:     self.unshard(self.unshard_async_op)
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_param_group.py", line 338, in unshard
+[rank2]:     self._all_gather_result = foreach_all_gather(
+[rank2]:                               ^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[rank2]:     return func(*args, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_collectives.py", line 262, in foreach_all_gather
+[rank2]:     all_gather_output = all_gather_comm.allocate(
+[rank2]:                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_collectives.py", line 59, in allocate
+[rank2]:     return torch.empty(*size, dtype=dtype, device=device)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.60 GiB. GPU 2 has a total capacity of 79.18 GiB of which 224.62 MiB is free. Process 4031101 has 35.76 GiB memory in use. Including non-PyTorch memory, this process has 43.19 GiB memory in use. Of the allocated memory 40.73 GiB is allocated by PyTorch, and 22.25 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1882, in <module>
+[rank0]:     main()
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1878, in main
+[rank0]:     trainer.run_train_validation_loop()
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1118, in run_train_validation_loop
+[rank0]:     train_log_data = self._run_train_optim_step(batches, self.max_grad_norm)
+[rank0]:                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1493, in _run_train_optim_step
+[rank0]:     self._forward_backward_step(
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/recipes/llm/train_ft.py", line 1349, in _forward_backward_step
+[rank0]:     out = model(**batch)
+[rank0]:           ^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1882, in _call_impl
+[rank0]:     return inner()
+[rank0]:            ^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1830, in inner
+[rank0]:     result = forward_call(*args, **kwargs)
+[rank0]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/utils/generic.py", line 939, in wrapper
+[rank0]:     output = func(self, *args, **kwargs)
+[rank0]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/components/models/llama/model.py", line 693, in forward
+[rank0]:     outputs: BaseModelOutputWithPast = self.model(
+[rank0]:                                        ^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/utils/generic.py", line 1068, in wrapper
+[rank0]:     output = func(self, *args, **kwargs)
+[rank0]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 287, in wrapper
+[rank0]:     outputs = func(self, *args, **kwargs)
+[rank0]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/nemo_automodel/components/models/llama/model.py", line 499, in forward
+[rank0]:     hidden_states = decoder_layer(
+[rank0]:                     ^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/transformers/modeling_layers.py", line 110, in __call__
+[rank0]:     return super().__call__(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1882, in _call_impl
+[rank0]:     return inner()
+[rank0]:            ^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1809, in inner
+[rank0]:     args_kwargs_result = hook(self, args, kwargs)  # type: ignore[misc]
+[rank0]:                          ^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_state.py", line 62, in fsdp_hook_wrapper
+[rank0]:     return torch._dynamo.disable(
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 1181, in _fn
+[rank0]:     return fn(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_state.py", line 253, in _pre_forward
+[rank0]:     args, kwargs = self._fsdp_param_group.pre_forward(module, args, kwargs)
+[rank0]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_param_group.py", line 449, in pre_forward
+[rank0]:     self.wait_for_unshard()
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_param_group.py", line 394, in wait_for_unshard
+[rank0]:     foreach_all_gather_copy_out(
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_collectives.py", line 374, in foreach_all_gather_copy_out
+[rank0]:     fsdp_param.init_all_gather_outputs(
+[rank0]:   File "[validation-workspace]/runtime/automodel-0.7-torch210/lib/python3.12/site-packages/torch/distributed/fsdp/_fully_shard/_fsdp_param.py", line 476, in init_all_gather_outputs
+[rank0]:     torch.empty(torch.Size([numel * world_size]), dtype=dtype, device=device)
+[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 448.00 MiB. GPU 0 has a total capacity of 79.18 GiB of which 438.62 MiB is free. Process 4031101 has 32.94 GiB memory in use. Including non-PyTorch memory, this process has 45.80 GiB memory in use. Of the allocated memory 42.61 GiB is allocated by PyTorch, and 6.43 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

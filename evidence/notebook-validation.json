@@ -1,0 +1,20 @@
+[
+  {
+    "notebook": "omni-finai-nvidia/01_interactive_demo.ipynb",
+    "status": "passed",
+    "executed_code_cells": 7,
+    "bootstrap": "local staged checkout; published v0.1.0 clone/install is not claimed as executed"
+  },
+  {
+    "notebook": "omni-finai-nvidia/02_evaluation.ipynb",
+    "status": "passed",
+    "executed_code_cells": 4,
+    "bootstrap": "local staged checkout; published v0.1.0 clone/install is not claimed as executed"
+  },
+  {
+    "notebook": "omni-finai-nvidia/03_automodel_lora.ipynb",
+    "status": "passed",
+    "executed_code_cells": 6,
+    "bootstrap": "local staged checkout; published v0.1.0 clone/install is not claimed as executed"
+  }
+]

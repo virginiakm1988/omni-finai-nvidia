@@ -1,0 +1,23 @@
+{
+  "review_scope": "independent read-only scheduler, saved adapter, log, fixed-test and metric verification",
+  "job_id": 14147,
+  "scheduler_state": "COMPLETED",
+  "scheduler_exit_code": "0:0",
+  "scheduler_elapsed": "00:08:38",
+  "file": "adapter_model.safetensors",
+  "size_bytes": 207244360,
+  "sha256": "753a81db0ccf18c7db604ac660715029c56b4a8c5cc73d8af479c8639c53894d",
+  "tensor_count": 1120,
+  "lora_B_tensor_count": 560,
+  "nonzero_lora_B_tensors": 560,
+  "optimizer_updates_verified": 12,
+  "all_recorded_gradient_norms_nonzero": true,
+  "test_sha256_recomputed": "938afa8d25601c4d0d346468b24e6e11e38e8e7bfef2f50dca5a1912ef78a9a8",
+  "before_after_metrics_recomputed": true,
+  "artifact_sha256": {
+    "result.json": "50ec24693b2d2c8d09471a61b262278a7a17daed5eff33536427ae714755e5c6",
+    "before.json": "2cdedf5e95e18b1be46b685b3347b884c259383adcaf5dba23feb73cae3b7b70",
+    "after.json": "288ffee3c8b464429c1dfa6e48d48dcdeef3061a0cd31029f545083515cee9a6",
+    "training.log": "9aa074c702188f3943f5dd264ef559ecb6b84edb0aa483887c23a1f043664c27"
+  }
+}

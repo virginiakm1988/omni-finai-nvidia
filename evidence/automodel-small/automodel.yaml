@@ -1,0 +1,74 @@
+recipe: TrainFinetuneRecipeForNextTokenPrediction
+seed: 42
+step_scheduler:
+  global_batch_size: 4
+  local_batch_size: 1
+  max_steps: 12
+  num_epochs: 2
+  ckpt_every_steps: 12
+  val_every_steps: 12
+dist_env:
+  backend: nccl
+  timeout_minutes: 10
+distributed:
+  strategy: fsdp2
+  dp_size: null
+  tp_size: 1
+  cp_size: 1
+model:
+  _target_: nemo_automodel.NeMoAutoModelForCausalLM.from_pretrained
+  pretrained_model_name_or_path: Qwen/Qwen2.5-0.5B-Instruct
+  revision: 7ae557604adf67be50417f59c2c2f167def9a775
+  dtype: bfloat16
+  attn_implementation: sdpa
+  trust_remote_code: false
+peft:
+  _target_: nemo_automodel.components._peft.lora.PeftConfig
+  target_modules: '*_proj'
+  dim: 8
+  alpha: 32
+loss_fn:
+  _target_: nemo_automodel.components.loss.masked_ce.MaskedCrossEntropy
+dataset:
+  _target_: nemo_automodel.components.datasets.llm.column_mapped_text_instruction_dataset.ColumnMappedTextInstructionDataset
+  path_or_dataset_id: [validation-workspace]/repos/omni-finai-nvidia/data/generated/train.jsonl
+  column_mapping:
+    context: context
+    question: question
+    answer: answer
+  seq_length: 512
+  answer_only_loss_mask: true
+  padding: do_not_pad
+  truncation: do_not_truncate
+  use_hf_chat_template: false
+validation_dataset:
+  _target_: nemo_automodel.components.datasets.llm.column_mapped_text_instruction_dataset.ColumnMappedTextInstructionDataset
+  path_or_dataset_id: [validation-workspace]/repos/omni-finai-nvidia/data/generated/validation.jsonl
+  column_mapping:
+    context: context
+    question: question
+    answer: answer
+  seq_length: 512
+  answer_only_loss_mask: true
+  padding: do_not_pad
+  truncation: do_not_truncate
+  use_hf_chat_template: false
+dataloader: &id001
+  _target_: torchdata.stateful_dataloader.StatefulDataLoader
+  collate_fn:
+    _target_: nemo_automodel.components.datasets.utils.default_collater
+  shuffle: false
+validation_dataloader: *id001
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 2.0e-05
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  weight_decay: 0.01
+checkpoint:
+  enabled: true
+  checkpoint_dir: [validation-workspace]/repos/omni-finai-nvidia/runs/automodel-small/20261116T092438-8690bf11/checkpoints
+  model_save_format: safetensors
+  save_consolidated: final

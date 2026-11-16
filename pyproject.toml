@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omni-finai-nvidia"
+version = "0.1.0"
+description = "Reproducible NVIDIA SDK companion tutorial: omni-finai-nvidia"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+dependencies = []
+
+[project.optional-dependencies]
+hf = ["torch>=2.6", "transformers>=4.51,<6", "accelerate>=1.0", "huggingface-hub>=0.34", "peft>=0.19.1"]
+train = ["nemo-automodel==0.7.0", "pyyaml==6.0.3"]
+
+notebook = ["ipywidgets==8.1.7", "nbformat==5.10.4", "matplotlib>=3.9"]
+
+[project.scripts]
+omni-finai-nvidia = "project_demo.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["project_demo*"]
+
+[tool.setuptools.package-data]
+project_demo = ["adapters/*.json"]

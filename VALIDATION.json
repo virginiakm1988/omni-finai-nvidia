@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-16",
+  "offline_tests": {
+    "status": "passed",
+    "count": 13
+  },
+  "independent_review": "two rounds passed; REVIEW.md",
+  "notebooks": {
+    "status": "passed",
+    "environment": "isolated local Python3.12 kernel",
+    "bootstrap": "local staged checkout; public clone/install pending publication",
+    "outputs": "actual saved cell output; fixture/live explicitly separated",
+    "executed_code_cells": {
+      "01_interactive_demo": 7,
+      "02_evaluation": 4,
+      "03_automodel_lora": 6
+    },
+    "source_ref": "v0.1.0"
+  },
+  "publication": "pending_parent_publication",
+  "small_automodel": {
+    "status": "passed",
+    "job_id": 14136,
+    "gpus": 1,
+    "profile": "Qwen/Qwen2.5-0.5B-Instruct",
+    "updates": 12,
+    "adapter_saved_reloaded": true,
+    "evidence": "evidence/automodel-small/result.json"
+  },
+  "original_70b": {
+    "status": "passed",
+    "job_id": 14147,
+    "gpus": 4,
+    "time_limit": "02:00:00",
+    "download": "complete; pinned original checkpoint",
+    "completed_inference": {
+      "plain": "passed execution; strict task scores0/3",
+      "checkpoint_chat": "passed execution; strict task scores0/3"
+    },
+    "prior_training_failure": "14144 OOM due retained baseline weights; now isolated HF subprocesses",
+    "updates": 12,
+    "adapter_saved_reloaded": true,
+    "evidence": "evidence/automodel-original/result.json",
+    "elapsed_seconds": 515.599,
+    "environment": "AutoModel0.7.0 / PyTorch2.10.0+cu128 / documented upstream Triton patch",
+    "before": {
+      "extract": {
+        "n": 4,
+        "pass_rate": 0.0,
+        "metric": "deterministic_correctness"
+      },
+      "qa": {
+        "n": 4,
+        "pass_rate": 0.0,
+        "metric": "deterministic_correctness"
+      },
+      "summary": {
+        "n": 4,
+        "pass_rate": 0.0,
+        "metric": "numeric_coverage_only"
+      }
+    },
+    "after": {
+      "extract": {
+        "n": 4,
+        "pass_rate": 0.0,
+        "metric": "deterministic_correctness"
+      },
+      "qa": {
+        "n": 4,
+        "pass_rate": 0.0,
+        "metric": "deterministic_correctness"
+      },
+      "summary": {
+        "n": 4,
+        "pass_rate": 1.0,
+        "metric": "numeric_coverage_only"
+      }
+    },
+    "scheduler_state": "COMPLETED",
+    "scheduler_exit_code": "0:0"
+  }
+}
